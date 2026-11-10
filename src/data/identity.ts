@@ -86,6 +86,10 @@ export interface IdentityData {
     instagramUrl: string;
     github: string;
     githubUrl: string;
+    linkedin?: string;
+    linkedinUrl?: string;
+    x?: string;
+    xUrl?: string;
     note: string;
     socials: { label: string; href: string }[];
   };
@@ -140,9 +144,9 @@ export const identity: IdentityData = {
       image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
       socials: [
         { label: "GitHub", href: "https://github.com/babaji1607", icon: "github" },
-        { label: "Instagram", href: "https://instagram.com/_many_colors_of_life", icon: "instagram" },
-        { label: "LinkedIn", href: "https://linkedin.com", icon: "linkedin" },
-        { label: "X", href: "https://x.com", icon: "x" }
+        { label: "LinkedIn", href: "https://www.linkedin.com/in/mohit-ashliya/", icon: "linkedin" },
+        { label: "X", href: "https://x.com/tranquil_ketu", icon: "x" },
+        { label: "Instagram", href: "https://instagram.com/_many_colors_of_life", icon: "instagram" }
       ]
     }
   },
@@ -336,13 +340,18 @@ export const identity: IdentityData = {
     instagramUrl: "https://instagram.com/_many_colors_of_life",
     github: "github.com/babaji1607",
     githubUrl: "https://github.com/babaji1607",
+    linkedin: "mohit-ashliya",
+    linkedinUrl: "https://www.linkedin.com/in/mohit-ashliya/",
+    x: "@tranquil_ketu",
+    xUrl: "https://x.com/tranquil_ketu",
     note: "Welcoming sincere inquiries on solution architecture, regenerative soil, and quiet strategic systems.",
     socials: [
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/mohit-ashliya/" },
+      { label: "X", href: "https://x.com/tranquil_ketu" },
       { label: "GitHub", href: "https://github.com/babaji1607" },
       { label: "Instagram", href: "https://instagram.com/_many_colors_of_life" },
       { label: "The Archetype", href: "/#work" },
-      { label: "Wisdom", href: "/#wisdom" },
-      { label: "Sound", href: "/#music" }
+      { label: "Wisdom", href: "/#wisdom" }
     ]
   }
 };

@@ -33,25 +33,25 @@ const { contact } = identity;
       </p>
     </div>
 
-    <!-- Contact Channels: 6-Slot Architectural Grid -->
-    <div id="footer-content" class="mt-12 pt-8 border-t border-[#181614]/[0.08] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 opacity-0 translate-y-6">
+    <!-- Contact Channels: 8-Slot Architectural Grid -->
+    <div id="footer-content" class="mt-12 pt-8 border-t border-[#181614]/[0.08] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 opacity-0 translate-y-6">
       
       <!-- 1. Primary Email Channel -->
       <div class="space-y-2">
         <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
-          Primary Electronic Mail
+          Primary Email
         </span>
         <div class="flex flex-col items-start gap-2.5">
           <a
             href={`mailto:${contact.email}`}
-            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8 break-all"
+            class="font-heading text-base sm:text-lg font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8 break-all"
           >
             {contact.email}
           </a>
           <button
             type="button"
             data-copy={contact.email}
-            class="copy-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm cursor-pointer"
+            class="copy-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm cursor-pointer"
           >
             <span class="copy-label">Copy address</span>
           </button>
@@ -61,19 +61,19 @@ const { contact } = identity;
       <!-- 2. Alternate Email Channel -->
       <div class="space-y-2">
         <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
-          Alternate Electronic Mail
+          Alternate Email
         </span>
         <div class="flex flex-col items-start gap-2.5">
           <a
             href={`mailto:${contact.alternateEmail || 'mohit.ashliya@zohomail.in'}`}
-            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8 break-all"
+            class="font-heading text-base sm:text-lg font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8 break-all"
           >
             {contact.alternateEmail || 'mohit.ashliya@zohomail.in'}
           </a>
           <button
             type="button"
             data-copy={contact.alternateEmail || 'mohit.ashliya@zohomail.in'}
-            class="copy-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm cursor-pointer"
+            class="copy-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm cursor-pointer"
           >
             <span class="copy-label">Copy address</span>
           </button>
@@ -88,7 +88,7 @@ const { contact } = identity;
         <div class="flex flex-col items-start gap-2.5">
           <a
             href={`tel:${(contact.phoneRaw || contact.phone).replace(/\s+/g, '')}`}
-            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+            class="font-heading text-base sm:text-lg font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
           >
             {contact.phoneDisplay || contact.phone}
           </a>
@@ -96,13 +96,13 @@ const { contact } = identity;
             <button
               type="button"
               data-copy={contact.phoneRaw || contact.phone}
-              class="copy-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm cursor-pointer"
+              class="copy-btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm cursor-pointer"
             >
-              <span class="copy-label">Copy number</span>
+              <span class="copy-label">Copy</span>
             </button>
             <a
               href={`tel:${(contact.phoneRaw || contact.phone).replace(/\s+/g, '')}`}
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-transparent hover:bg-[#181614]/5 dark:hover:bg-white/5 text-[#615B52] dark:text-[#A39D92] text-xs font-medium transition-colors"
+              class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-transparent hover:bg-[#181614]/5 dark:hover:bg-white/5 text-[#615B52] dark:text-[#A39D92] text-xs font-medium transition-colors"
             >
               Call ↗
             </a>
@@ -113,14 +113,14 @@ const { contact } = identity;
       <!-- 4. WhatsApp Channel -->
       <div class="space-y-2">
         <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
-          WhatsApp Instant
+          WhatsApp
         </span>
         <div class="flex flex-col items-start gap-2.5">
           <a
             href={contact.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+            class="font-heading text-base sm:text-lg font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
           >
             {contact.whatsapp}
           </a>
@@ -128,24 +128,74 @@ const { contact } = identity;
             href={contact.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
           >
-            <span>Chat on WhatsApp ↗</span>
+            <span>Chat ↗</span>
           </a>
         </div>
       </div>
 
-      <!-- 5. Instagram Channel -->
+      <!-- 5. LinkedIn Channel -->
       <div class="space-y-2">
         <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
-          Visual Journal / Instagram
+          LinkedIn / Professional
+        </span>
+        <div class="flex flex-col items-start gap-2.5">
+          <a
+            href={contact.linkedinUrl || "https://www.linkedin.com/in/mohit-ashliya/"}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-heading text-base sm:text-lg font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+          >
+            in/mohit-ashliya
+          </a>
+          <a
+            href={contact.linkedinUrl || "https://www.linkedin.com/in/mohit-ashliya/"}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
+          >
+            <span>Connect on LinkedIn ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. X (Twitter) Channel -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
+          X / Reflections
+        </span>
+        <div class="flex flex-col items-start gap-2.5">
+          <a
+            href={contact.xUrl || "https://x.com/tranquil_ketu"}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-heading text-base sm:text-lg font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+          >
+            @tranquil_ketu
+          </a>
+          <a
+            href={contact.xUrl || "https://x.com/tranquil_ketu"}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
+          >
+            <span>Follow on X ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 7. Instagram Channel -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
+          Instagram / Journal
         </span>
         <div class="flex flex-col items-start gap-2.5">
           <a
             href={contact.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+            class="font-heading text-base sm:text-lg font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
           >
             {contact.instagram}
           </a>
@@ -153,24 +203,24 @@ const { contact } = identity;
             href={contact.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
           >
-            <span>Visit Profile ↗</span>
+            <span>Follow @_many_colors_of_life ↗</span>
           </a>
         </div>
       </div>
 
-      <!-- 6. GitHub Channel -->
+      <!-- 8. GitHub Channel -->
       <div class="space-y-2">
         <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
-          Code & Architecture / GitHub
+          GitHub / Architecture
         </span>
         <div class="flex flex-col items-start gap-2.5">
           <a
             href={contact.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+            class="font-heading text-base sm:text-lg font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
           >
             {contact.github}
           </a>
@@ -178,9 +228,9 @@ const { contact } = identity;
             href={contact.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
           >
-            <span>View Repositories ↗</span>
+            <span>Repositories ↗</span>
           </a>
         </div>
       </div>
