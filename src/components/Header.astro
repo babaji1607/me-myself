@@ -1,0 +1,352 @@
+---
+import { identity } from '../data/identity';
+
+const navItems = [
+  { id: 'hero', number: '01', label: 'Mohit', subtitle: 'The Witness' },
+  { id: 'work', number: '02', label: 'The Archetype', subtitle: 'Soil & Silicon' },
+  { id: 'wisdom', number: '03', label: 'Wisdom', subtitle: 'Advaita & Philosophy' },
+  { id: 'music', number: '04', label: 'Sound', subtitle: 'Sacred Audio' },
+  { id: 'memories', number: '05', label: 'Memories', subtitle: 'Living Archive' },
+  { id: 'contact', number: '06', label: 'Inquire', subtitle: 'Direct Correspondence' },
+];
+---
+
+<!-- 1. Top-Left Quiet Brand Mark (Boundless, no top bar) -->
+<aside class="fixed top-6 left-6 md:top-8 md:left-10 z-40 select-none">
+  <a href="/#hero" class="group flex items-center gap-3 focus:outline-none">
+    <span class="w-8 h-8 rounded-full bg-[#181614] dark:bg-[#FAF8F5] text-[#FAF8F5] dark:text-[#181614] flex items-center justify-center font-heading text-xs font-semibold tracking-wider shadow-sm transition-transform duration-300 group-hover:scale-105">
+      {identity.monogram}
+    </span>
+    <span class="font-heading text-sm font-semibold tracking-tight text-[#181614] dark:text-[#FAF8F5] opacity-90 group-hover:opacity-100 transition-opacity">
+      {identity.name}
+    </span>
+  </a>
+</aside>
+
+<!-- 2. Desktop Adaptive Side Dock (Self-contained, seamless liquid corner transition, automatic spy) -->
+<div class="hidden md:flex fixed right-6 md:right-8 top-1/2 -translate-y-1/2 z-50 items-center justify-end select-none group/dock">
+
+  <!-- Unified Glass Capsule: Uses consistent rounded-[26px] corner curvature in BOTH states for organic liquid expansion -->
+  <nav
+    id="side-dock-nav"
+    class="relative overflow-hidden w-12 py-5 px-3 rounded-[26px] group-hover/dock:w-[16.5rem] group-hover/dock:p-5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[#FAF8F5]/80 dark:bg-[#121110]/80 group-hover/dock:bg-[#FAF8F5]/95 group-hover/dock:dark:bg-[#121110]/95 backdrop-blur-xl border border-[#181614]/[0.08] dark:border-white/[0.12] shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.5)] flex flex-col justify-between"
+    aria-label="Side Navigation"
+  >
+    <!-- =================================================================== -->
+    <!-- COLLAPSED VIEW: Self-contained rail with live section number & dots -->
+    <!-- =================================================================== -->
+    <div class="flex flex-col items-center gap-4 transition-all duration-250 group-hover/dock:opacity-0 group-hover/dock:pointer-events-none group-hover/dock:scale-95 absolute inset-0 py-5 px-3 justify-between">
+      <!-- Live Micro-Number Indicator (Self-contained section spy) -->
+      <span 
+        id="dock-micro-number"
+        class="font-mono text-[10px] font-semibold text-[#B27B48] tracking-widest"
+      >
+        01
+      </span>
+
+      <!-- 6 Vertical Navigation Track Points -->
+      <div class="flex flex-col items-center gap-2.5 py-1">
+        {navItems.map((item) => (
+          <a
+            href={`/#${item.id}`}
+            class="p-0.5 focus:outline-none"
+            aria-label={item.label}
+          >
+            <div
+              data-nav-dot={item.id}
+              class="w-1.5 h-1.5 rounded-full bg-[#181614]/25 dark:bg-white/30 hover:bg-[#181614]/50 dark:hover:bg-white/60 transition-all duration-300"
+            ></div>
+          </a>
+        ))}
+      </div>
+
+      <!-- Compact Theme Icon Indicator -->
+      <div class="pt-1 text-[#615B52] dark:text-[#A39D92]">
+        <svg class="w-3.5 h-3.5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4" stroke-width="2"></circle>
+        </svg>
+        <svg class="w-3.5 h-3.5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- EXPANDED VIEW: Complete Architectural Directory (Fixed width inner) -->
+    <!-- =================================================================== -->
+    <div class="w-[14rem] min-w-[14rem] flex flex-col gap-3 opacity-0 pointer-events-none group-hover/dock:opacity-100 group-hover/dock:pointer-events-auto transition-opacity duration-300 delay-100">
+      <!-- Directory Top Bar -->
+      <div class="flex items-center justify-between pb-2 border-b border-[#181614]/[0.06] dark:border-white/[0.08]">
+        <span class="text-[9px] font-mono tracking-widest uppercase text-[#A39D92] dark:text-[#615B52]">
+          Index // 06
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-[#B27B48]"></span>
+      </div>
+
+      <!-- Navigation Link Rows -->
+      <div class="flex flex-col gap-1">
+        {navItems.map((item) => (
+          <a
+            href={`/#${item.id}`}
+            data-nav-link={item.id}
+            class="group/link flex items-center justify-between px-3 py-2 rounded-xl text-xs text-[#615B52] dark:text-[#A39D92] hover:text-[#181614] dark:hover:text-[#FAF8F5] hover:bg-[#181614]/5 dark:hover:bg-white/5 transition-all duration-200"
+          >
+            <div class="flex items-center gap-2.5">
+              <span class="font-mono text-[10px] text-[#A39D92] dark:text-[#615B52] group-hover/link:text-[#B27B48] transition-colors">
+                {item.number}
+              </span>
+              <span class="font-heading font-medium tracking-tight">
+                {item.label}
+              </span>
+            </div>
+            <span class="text-[9px] font-mono opacity-0 group-hover/link:opacity-60 transition-opacity">
+              →
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <!-- Bottom Theme Toggle Row -->
+      <div class="pt-2 mt-1 border-t border-[#181614]/[0.06] dark:border-white/[0.08]">
+        <button
+          id="theme-toggle-desktop"
+          type="button"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-[#615B52] dark:text-[#A39D92] hover:text-[#181614] dark:hover:text-[#FAF8F5] hover:bg-[#181614]/5 dark:hover:bg-white/5 transition-all duration-200 focus:outline-none"
+          aria-label="Toggle theme mode"
+        >
+          <span class="font-mono text-[10px] uppercase tracking-wider">
+            Appearance
+          </span>
+          <div class="flex items-center gap-1.5 text-xs">
+            <span class="hidden dark:inline text-[11px]">Dark</span>
+            <span class="inline dark:hidden text-[11px]">Light</span>
+            <!-- Sun Icon (in dark mode) -->
+            <svg class="w-3.5 h-3.5 hidden dark:block text-[#B27B48]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="4" stroke-width="1.8"></circle>
+              <path stroke-linecap="round" stroke-width="1.8" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"></path>
+            </svg>
+            <!-- Moon Icon (in light mode) -->
+            <svg class="w-3.5 h-3.5 block dark:hidden text-[#B27B48]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- 3. Mobile Adaptive Floating Bottom Pill (Modern touch dock) -->
+<div class="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2.5rem)] max-w-sm select-none">
+  <div class="px-4 py-2.5 rounded-full bg-[#FAF8F5]/90 dark:bg-[#121110]/90 backdrop-blur-xl border border-[#181614]/[0.08] dark:border-white/[0.12] shadow-2xl flex items-center justify-between">
+    <!-- Active Section Live Indicator -->
+    <div class="flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-[#B27B48] animate-pulse"></span>
+      <span id="mobile-active-section-label" class="text-[11px] font-mono uppercase tracking-wider text-[#181614] dark:text-[#FAF8F5] font-medium">
+        01 // Mohit
+      </span>
+    </div>
+
+    <!-- Actions (Menu Toggle & Theme Switch) -->
+    <div class="flex items-center gap-2">
+      <button
+        id="theme-toggle-mobile"
+        type="button"
+        class="w-7 h-7 rounded-full flex items-center justify-center text-[#181614] dark:text-[#FAF8F5] hover:bg-[#181614]/5 dark:hover:bg-white/10 transition-colors focus:outline-none"
+        aria-label="Toggle theme"
+      >
+        <svg class="w-3.5 h-3.5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4" stroke-width="1.8"></circle>
+          <path stroke-linecap="round" stroke-width="1.8" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"></path>
+        </svg>
+        <svg class="w-3.5 h-3.5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </svg>
+      </button>
+
+      <button
+        id="mobile-sheet-toggle"
+        type="button"
+        class="px-2.5 py-1 rounded-full bg-[#181614] dark:bg-[#FAF8F5] text-[#FAF8F5] dark:text-[#181614] font-mono text-[10px] tracking-wider uppercase flex items-center gap-1 focus:outline-none"
+        aria-label="Toggle menu"
+      >
+        Menu
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Sheet Overlay -->
+  <div
+    id="mobile-sheet"
+    class="hidden mt-2 p-4 rounded-2xl bg-[#FAF8F5]/98 dark:bg-[#121110]/98 backdrop-blur-2xl border border-[#181614]/[0.08] dark:border-white/[0.12] shadow-2xl flex flex-col gap-1.5"
+  >
+    {navItems.map((item) => (
+      <a
+        href={`/#${item.id}`}
+        class="mobile-sheet-link flex items-center justify-between px-3 py-2 rounded-xl text-xs text-[#181614] dark:text-[#FAF8F5] hover:bg-[#181614]/5 dark:hover:bg-white/5 transition-colors"
+      >
+        <span class="font-heading font-medium">
+          {item.label}
+        </span>
+        <span class="font-mono text-[10px] text-[#A39D92]">
+          {item.number}
+        </span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<script>
+  function setupSideNav() {
+    const sections = [
+      { id: 'hero', number: '01', label: 'Mohit' },
+      { id: 'work', number: '02', label: 'The Archetype' },
+      { id: 'wisdom', number: '03', label: 'Wisdom' },
+      { id: 'music', number: '04', label: 'Sound' },
+      { id: 'memories', number: '05', label: 'Memories' },
+      { id: 'contact', number: '06', label: 'Inquire' },
+    ];
+
+    let currentActiveId = '';
+
+    // 1. UPDATE ACTIVE INDICATORS & LABELS
+    function updateActiveSection(activeId: string) {
+      if (activeId === currentActiveId) return;
+      currentActiveId = activeId;
+
+      const currentSection = sections.find((s) => s.id === activeId);
+      if (!currentSection) return;
+
+      // Update Self-Contained Micro-Number on Collapsed Dock
+      const microNumber = document.getElementById('dock-micro-number');
+      if (microNumber) {
+        microNumber.textContent = currentSection.number;
+      }
+
+      // Update Mobile Live Badge
+      const mobileBadgeLabel = document.getElementById('mobile-active-section-label');
+      if (mobileBadgeLabel) {
+        mobileBadgeLabel.textContent = `${currentSection.number} // ${currentSection.label}`;
+      }
+
+      // Update Collapsed Dots
+      document.querySelectorAll('[data-nav-dot]').forEach((el) => {
+        const target = el.getAttribute('data-nav-dot');
+        if (target === activeId) {
+          el.className = 'w-1.5 h-5 rounded-full bg-[#B27B48] shadow-[0_0_10px_rgba(178,123,72,0.6)] transition-all duration-300';
+        } else {
+          el.className = 'w-1.5 h-1.5 rounded-full bg-[#181614]/25 dark:bg-white/30 hover:bg-[#181614]/50 dark:hover:bg-white/60 transition-all duration-300';
+        }
+      });
+
+      // Update Expanded Nav Links
+      document.querySelectorAll('[data-nav-link]').forEach((el) => {
+        const target = el.getAttribute('data-nav-link');
+        if (target === activeId) {
+          el.classList.add('bg-[#B27B48]/12', 'dark:bg-[#B27B48]/20', 'text-[#B27B48]', 'dark:text-[#E2A66C]', 'font-semibold');
+          el.classList.remove('text-[#615B52]', 'dark:text-[#A39D92]');
+        } else {
+          el.classList.remove('bg-[#B27B48]/12', 'dark:bg-[#B27B48]/20', 'text-[#B27B48]', 'dark:text-[#E2A66C]', 'font-semibold');
+          el.classList.add('text-[#615B52]', 'dark:text-[#A39D92]');
+        }
+      });
+    }
+
+    // 2. AUTOMATIC SECTION SPY (Real-time Viewport Tracking)
+    function onScroll() {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const viewportMiddle = scrollY + windowHeight * 0.42;
+
+      let candidateId = sections[0].id;
+
+      for (const section of sections) {
+        const el = document.getElementById(section.id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (viewportMiddle >= top && viewportMiddle < top + height) {
+            candidateId = section.id;
+            break;
+          }
+        }
+      }
+
+      // Edge check: near bottom of page -> contact
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 70) {
+        candidateId = 'contact';
+      }
+
+      updateActiveSection(candidateId);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    const lenis = (window as any).__lenis;
+    if (lenis) {
+      lenis.on('scroll', onScroll);
+    }
+    onScroll(); // Run immediately
+
+    document.addEventListener('astro:before-swap', () => {
+      window.removeEventListener('scroll', onScroll);
+      const currentLenis = (window as any).__lenis;
+      if (currentLenis) {
+        currentLenis.off('scroll', onScroll);
+      }
+    }, { once: true });
+
+    // 3. SMOOTH SCROLL INTEGRATION (Lenis-aware)
+    document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((anchor) => {
+      anchor.addEventListener('click', (e) => {
+        const href = anchor.getAttribute('href');
+        if (!href) return;
+        const hash = href.startsWith('/#') ? href.substring(1) : href;
+        if (hash.startsWith('#')) {
+          const isHome = window.location.pathname === '/' || window.location.pathname === '';
+          if (isHome) {
+            const targetEl = document.querySelector(hash);
+            if (targetEl) {
+              e.preventDefault();
+              const currentLenis = (window as any).__lenis;
+              if (currentLenis) {
+                currentLenis.scrollTo(targetEl, { duration: 1.2, offset: 0 });
+              } else {
+                targetEl.scrollIntoView({ behavior: 'smooth' });
+              }
+            }
+          }
+        }
+      });
+    });
+
+    // 4. THEME TOGGLE FUNCTIONALITY
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    const themeDesktop = document.getElementById('theme-toggle-desktop');
+    const themeMobile = document.getElementById('theme-toggle-mobile');
+    if (themeDesktop) themeDesktop.addEventListener('click', toggleTheme);
+    if (themeMobile) themeMobile.addEventListener('click', toggleTheme);
+
+    // 5. MOBILE SHEET TOGGLE
+    const mobileBtn = document.getElementById('mobile-sheet-toggle');
+    const mobileSheet = document.getElementById('mobile-sheet');
+    const mobileLinks = document.querySelectorAll('.mobile-sheet-link');
+
+    if (mobileBtn && mobileSheet) {
+      mobileBtn.addEventListener('click', () => {
+        mobileSheet.classList.toggle('hidden');
+      });
+
+      mobileLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileSheet.classList.add('hidden');
+        });
+      });
+    }
+  }
+
+  document.addEventListener('astro:page-load', setupSideNav);
+</script>

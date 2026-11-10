@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-canvas: #FAF8F5;
+    --bg-surface: #F3EFE6;
+    --bg-surface-subtle: #F7F4EC;
+    --text-primary: #181614;
+    --text-muted: #615B52;
+    --text-faint: #8E877C;
+    --border-subtle: rgba(24, 22, 20, 0.08);
+    --border-hover: rgba(24, 22, 20, 0.2);
+    --accent: #B27B48;
+    --vinyl-base: #141312;
+  }
+
+  html.dark {
+    --bg-canvas: #121110;
+    --bg-surface: #1C1B18;
+    --bg-surface-subtle: #171614;
+    --text-primary: #FAF8F5;
+    --text-muted: #A39D92;
+    --text-faint: #706B62;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 255, 255, 0.22);
+    --accent: #C78F56;
+    --vinyl-base: #0A0A09;
+  }
+
+  html {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body {
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: var(--text-primary);
+    color: var(--bg-canvas);
+  }
+}
+
+/* Strict 2-Font System */
+/* Font 1: Plus Jakarta Sans for refined, quiet, structural strength */
+.font-heading {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Font 2: Inter for calm, plain, highly readable body */
+.font-body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Vinyl Record Grooves Styling */
+.vinyl-disc {
+  background:
+    radial-gradient(circle at center, transparent 28%, rgba(255,255,255,0.04) 28.5%, transparent 29%),
+    radial-gradient(circle at center, transparent 38%, rgba(255,255,255,0.03) 38.5%, transparent 39%),
+    radial-gradient(circle at center, transparent 48%, rgba(255,255,255,0.04) 48.5%, transparent 49%),
+    radial-gradient(circle at center, transparent 58%, rgba(255,255,255,0.03) 58.5%, transparent 59%),
+    radial-gradient(circle at center, transparent 68%, rgba(255,255,255,0.04) 68.5%, transparent 69%),
+    radial-gradient(circle at center, transparent 78%, rgba(255,255,255,0.03) 78.5%, transparent 79%),
+    radial-gradient(circle at center, transparent 88%, rgba(255,255,255,0.03) 88.5%, transparent 89%),
+    conic-gradient(from 45deg, #161514, #262422 15%, #161514 30%, #262422 45%, #161514 60%, #262422 75%, #161514 90%, #262422 100%);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes spin-record {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-record 7s linear infinite;
+}
+
+.record-disc.is-playing {
+  animation: spin-record 8s linear infinite !important;
+  animation-play-state: running !important;
+}
+
+.record-disc.is-paused {
+  animation: spin-record 8s linear infinite !important;
+  animation-play-state: paused !important;
+}
+
+/* Subtle, unhurried marquee */
+@keyframes marquee-glide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-glide 70s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track, .animate-spin-slow {
+    animation: none !important;
+  }
+}

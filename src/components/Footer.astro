@@ -1,0 +1,209 @@
+---
+import { identity } from '../data/identity';
+
+const { contact } = identity;
+---
+
+<footer
+  id="contact"
+  class="relative z-20 -mt-10 sm:-mt-14 md:-mt-20 rounded-t-[36px] sm:rounded-t-[52px] md:rounded-t-[64px] border-t border-[#181614]/[0.08] dark:border-white/[0.1] bg-[#FAF8F5] dark:bg-[#0F0E0D] shadow-[0_-25px_60px_-15px_rgba(24,22,20,0.08)] dark:shadow-[0_-30px_70px_-15px_rgba(0,0,0,0.7)] pt-16 sm:pt-20 md:pt-28 pb-16 md:pb-24 overflow-hidden"
+>
+  <!-- Architectural Shutter Lines Subtle Ambient Texture -->
+  <div class="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.04] bg-[linear-gradient(to_bottom,currentColor_1px,transparent_1px)] bg-[size:100%_48px]"></div>
+
+  <div class="max-w-6xl mx-auto px-6 md:px-10 relative z-10">
+    <!-- Shutter Top Centered Tactile Pill Bar -->
+    <div class="flex justify-center mb-10 sm:mb-14">
+      <div class="w-14 sm:w-20 h-1 sm:h-1.5 rounded-full bg-[#181614]/20 dark:bg-white/20"></div>
+    </div>
+
+    <!-- Pure Typographic Section Intro -->
+    <div class="max-w-2xl space-y-3 section-title-wrap">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#B27B48]"></span>
+        <span class="text-xs font-mono uppercase tracking-widest text-[#615B52] dark:text-[#A39D92]">
+          06 // Direct Correspondence
+        </span>
+      </div>
+      <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-[#181614] dark:text-[#FAF8F5]">
+        Get in Touch
+      </h2>
+      <p class="section-desc text-base text-[#615B52] dark:text-[#A39D92] leading-relaxed">
+        {contact.note}
+      </p>
+    </div>
+
+    <!-- Contact Info Grid: Email, Phone, WhatsApp, Instagram (Direct & Clean, just like current email) -->
+    <div id="footer-content" class="mt-12 pt-8 border-t border-[#181614]/[0.08] dark:border-white/[0.08] grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 opacity-0 translate-y-6">
+      
+      <!-- 1. Email Channel -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
+          Electronic Mail
+        </span>
+        <div class="flex flex-wrap items-center gap-3">
+          <a
+            href={`mailto:${contact.email}`}
+            class="font-heading text-xl sm:text-2xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+          >
+            {contact.email}
+          </a>
+          <button
+            id="copy-email-btn"
+            type="button"
+            data-email={contact.email}
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none"
+          >
+            <span id="copy-email-label">Copy address</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Phone Number Channel -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
+          Phone Number
+        </span>
+        <div class="flex flex-wrap items-center gap-3">
+          <a
+            href={`tel:${contact.phone.replace(/\s+/g, '')}`}
+            class="font-heading text-xl sm:text-2xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+          >
+            {contact.phoneDisplay || contact.phone}
+          </a>
+          <button
+            id="copy-phone-btn"
+            type="button"
+            data-phone={contact.phone}
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none"
+          >
+            <span id="copy-phone-label">Copy number</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. WhatsApp Channel -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
+          WhatsApp
+        </span>
+        <div class="flex flex-wrap items-center gap-3">
+          <a
+            href={contact.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-heading text-xl sm:text-2xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+          >
+            {contact.whatsapp}
+          </a>
+          <a
+            href={contact.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none"
+          >
+            <span>Chat on WhatsApp ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4. Instagram Channel -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
+          Instagram
+        </span>
+        <div class="flex flex-wrap items-center gap-3">
+          <a
+            href={contact.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-heading text-xl sm:text-2xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+          >
+            {contact.instagram}
+          </a>
+          <a
+            href={contact.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none"
+          >
+            <span>Visit Instagram ↗</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sign-off Row -->
+    <div class="mt-14 pt-8 border-t border-[#181614]/[0.08] dark:border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-[#615B52] dark:text-[#A39D92]">
+      <div class="flex items-center gap-6">
+        {contact.socials.map((social) => (
+          <a
+            href={social.href}
+            class="hover:text-[#181614] dark:hover:text-[#FAF8F5] transition-colors"
+          >
+            {social.label} ↗
+          </a>
+        ))}
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span>{identity.location} • Rajasthan</span>
+        <span>•</span>
+        <span>© {new Date().getFullYear()} {identity.name}</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function setupCopyButtons() {
+    // Copy Email
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    const emailLabel = document.getElementById('copy-email-label');
+
+    if (copyEmailBtn && emailLabel) {
+      copyEmailBtn.addEventListener('click', async () => {
+        const email = copyEmailBtn.getAttribute('data-email') || '';
+        try {
+          await navigator.clipboard.writeText(email);
+          const original = emailLabel.textContent;
+          emailLabel.textContent = 'Copied ✓';
+          copyEmailBtn.classList.add('bg-[#181614]', 'text-[#FAF8F5]', 'dark:bg-[#FAF8F5]', 'dark:text-[#181614]');
+
+          setTimeout(() => {
+            emailLabel.textContent = original;
+            copyEmailBtn.classList.remove('bg-[#181614]', 'text-[#FAF8F5]', 'dark:bg-[#FAF8F5]', 'dark:text-[#181614]');
+          }, 2400);
+        } catch (err) {
+          console.error('Failed to copy email:', err);
+        }
+      });
+    }
+
+    // Copy Phone
+    const copyPhoneBtn = document.getElementById('copy-phone-btn');
+    const phoneLabel = document.getElementById('copy-phone-label');
+
+    if (copyPhoneBtn && phoneLabel) {
+      copyPhoneBtn.addEventListener('click', async () => {
+        const phone = copyPhoneBtn.getAttribute('data-phone') || '';
+        try {
+          await navigator.clipboard.writeText(phone);
+          const original = phoneLabel.textContent;
+          phoneLabel.textContent = 'Copied ✓';
+          copyPhoneBtn.classList.add('bg-[#181614]', 'text-[#FAF8F5]', 'dark:bg-[#FAF8F5]', 'dark:text-[#181614]');
+
+          setTimeout(() => {
+            phoneLabel.textContent = original;
+            copyPhoneBtn.classList.remove('bg-[#181614]', 'text-[#FAF8F5]', 'dark:bg-[#FAF8F5]', 'dark:text-[#181614]');
+          }, 2400);
+        } catch (err) {
+          console.error('Failed to copy phone:', err);
+        }
+      });
+    }
+  }
+
+  document.addEventListener('astro:page-load', setupCopyButtons);
+</script>

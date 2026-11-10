@@ -1,0 +1,446 @@
+---
+interface Props {
+  className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<div class={`relative w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl h-[460px] sm:h-[560px] md:h-[660px] lg:h-[760px] mx-auto select-none overflow-visible ${className}`}>
+  <!-- Boundless Container: NO overflow hidden, canvas bleeds generously into surrounding whitespace -->
+  <div
+    id="particle-container"
+    class="relative w-full h-full overflow-visible cursor-crosshair group"
+  >
+    <!-- Expanded canvas allowing particles to overflow and drift freely outside the figure -->
+    <canvas
+      id="hero-particle-canvas"
+      class="absolute -inset-x-10 sm:-inset-x-16 md:-inset-x-24 -bottom-16 sm:-bottom-20 top-0 w-[calc(100%+5rem)] sm:w-[calc(100%+8rem)] md:w-[calc(100%+12rem)] h-[calc(100%+4rem)] sm:h-[calc(100%+5rem)] block pointer-events-auto touch-none"
+    ></canvas>
+  </div>
+</div>
+
+<script>
+  import * as THREE from 'three';
+  import gsap from 'gsap';
+
+  function initBoundlessParticleShader() {
+    const canvas = document.getElementById('hero-particle-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    let width = canvas.clientWidth;
+    let height = canvas.clientHeight;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.z = 2.32;
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance'
+    });
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(pixelRatio);
+
+    // Load authentic person image texture
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load('/images/hero-figure-transparent.png');
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.generateMipmaps = false;
+
+    const aspect = 1.791;
+    const planeHeight = 1.62;
+    const planeWidth = planeHeight * aspect; // ~2.90
+
+    const uniforms = {
+      uTexture: { value: texture },
+      uTime: { value: 0 },
+      uMouse: { value: new THREE.Vector2(999.0, 999.0) },
+      uHover: { value: 0.0 },
+      uRadius: { value: 0.55 },
+      uPixelRatio: { value: pixelRatio },
+      uIsDark: { value: document.documentElement.classList.contains('dark') ? 1.0 : 0.0 },
+      uScrollProgress: { value: 0.0 },
+      uGather: { value: 0.0 }
+    };
+
+    // =========================================================================
+    // LAYER 1: RAZOR-SHARP SOLID IMAGE (Well-defined photograph at rest)
+    // Masks out smoothly under cursor and fades in as particles finish gathering
+    // =========================================================================
+    const planeVertexShader = `
+      varying vec2 vUv;
+      varying vec3 vWorldPos;
+
+      void main() {
+        vUv = uv;
+        vec4 worldPos = modelMatrix * vec4(position, 1.0);
+        vWorldPos = worldPos.xyz;
+        gl_Position = projectionMatrix * viewMatrix * worldPos;
+      }
+    `;
+
+    const planeFragmentShader = `
+      uniform sampler2D uTexture;
+      uniform vec2 uMouse;
+      uniform float uHover;
+      uniform float uRadius;
+      uniform float uScrollProgress;
+      uniform float uGather;
+      varying vec2 vUv;
+      varying vec3 vWorldPos;
+
+      void main() {
+        vec4 tex = texture2D(uTexture, vUv);
+        if (tex.a < 0.04) discard;
+
+        // Solid photograph reveals seamlessly as particles gather home
+        float introAlpha = smoothstep(0.82, 0.98, uGather);
+        if (introAlpha <= 0.005) discard;
+
+        // Mask out the area right under the cursor where particles break away
+        float mask = 1.0;
+        if (uHover > 0.005) {
+          float dist = distance(vWorldPos.xy, uMouse);
+          float innerR = uRadius * 0.35 * uHover;
+          float outerR = uRadius * 0.90 * uHover;
+          mask = smoothstep(innerR, outerR, dist);
+        }
+
+        // Smooth dissolution on scroll
+        float scrollAlpha = 1.0 - smoothstep(0.15, 0.75, uScrollProgress);
+        float alpha = tex.a * mask * scrollAlpha * introAlpha;
+
+        if (alpha <= 0.01) discard;
+
+        gl_FragColor = vec4(tex.rgb, alpha);
+      }
+    `;
+
+    const planeMat = new THREE.ShaderMaterial({
+      vertexShader: planeVertexShader,
+      fragmentShader: planeFragmentShader,
+      uniforms,
+      transparent: true,
+      depthTest: false,
+    });
+
+    const planeGeo = new THREE.PlaneGeometry(planeWidth, planeHeight, 1, 1);
+    const solidMesh = new THREE.Mesh(planeGeo, planeMat);
+    solidMesh.position.z = -0.005; // Base layer
+    scene.add(solidMesh);
+
+    // =========================================================================
+    // LAYER 2: 3D PARTICLE STARDUST CLOUD
+    // Streams in on first load, activates under hover, and dissolves on scroll
+    // =========================================================================
+    const cols = 320;
+    const rows = 180;
+    const count = cols * rows; // 57,600 particles
+
+    const positions = new Float32Array(count * 3);
+    const uvs = new Float32Array(count * 2);
+    const randoms = new Float32Array(count);
+    const origins = new Float32Array(count * 3);
+
+    let idx = 0;
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        const u = i / (cols - 1);
+        const v = j / (rows - 1);
+
+        const x = (u - 0.5) * planeWidth;
+        const y = (0.5 - v) * planeHeight;
+        const z = 0.0;
+
+        positions[idx * 3] = x;
+        positions[idx * 3 + 1] = y;
+        positions[idx * 3 + 2] = z;
+
+        uvs[idx * 2] = u;
+        uvs[idx * 2 + 1] = 1.0 - v;
+
+        const rand = Math.random();
+        randoms[idx] = rand;
+
+        // Dispersed 3D origin in wide cosmic space for gathering entrance
+        const angle = rand * 6.283185;
+        const dist = 0.8 + Math.pow(Math.random(), 0.65) * 2.8;
+        const depth = (Math.random() - 0.5) * 3.5;
+
+        origins[idx * 3] = Math.cos(angle) * dist * 1.45;
+        origins[idx * 3 + 1] = Math.sin(angle) * dist * 0.95 + (Math.random() - 0.5) * 0.8;
+        origins[idx * 3 + 2] = depth;
+
+        idx++;
+      }
+    }
+
+    const pointsGeo = new THREE.BufferGeometry();
+    pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    pointsGeo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+    pointsGeo.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
+    pointsGeo.setAttribute('aOrigin', new THREE.BufferAttribute(origins, 3));
+
+    const pointsVertexShader = `
+      uniform float uTime;
+      uniform vec2 uMouse;
+      uniform float uHover;
+      uniform float uRadius;
+      uniform float uScrollProgress;
+      uniform float uPixelRatio;
+      uniform float uGather;
+      attribute float aRandom;
+      attribute vec3 aOrigin;
+      varying vec2 vUv;
+      varying float vRatio;
+      varying float vScroll;
+      varying float vGather;
+
+      void main() {
+        vUv = uv;
+        vScroll = uScrollProgress;
+        vGather = uGather;
+
+        vec3 pos = position;
+
+        // 1. First Load Gathering Entrance: Particles stream inward from 3D space
+        if (uGather < 1.0) {
+          float pStart = aRandom * 0.32;
+          float pProgress = clamp((uGather - pStart) / (1.0 - pStart + 0.001), 0.0, 1.0);
+          
+          // Silky cubic ease-out
+          float ease = 1.0 - pow(1.0 - pProgress, 3.0);
+
+          // Gentle rotational vortex curl during flight
+          float swirlAngle = (1.0 - ease) * (aRandom * 3.8 + 1.8);
+          vec2 rotatedOffset = vec2(
+            aOrigin.x * cos(swirlAngle) - aOrigin.y * sin(swirlAngle),
+            aOrigin.x * sin(swirlAngle) + aOrigin.y * cos(swirlAngle)
+          );
+
+          vec3 currentOffset = mix(vec3(rotatedOffset, aOrigin.z), vec3(0.0), ease);
+          pos += currentOffset;
+        }
+
+        // 2. Interactive Cursor Scatter (active once assembled)
+        float dist = distance(position.xy, uMouse);
+        float ratio = clamp(1.0 - (dist / uRadius), 0.0, 1.0) * uHover;
+        vRatio = ratio;
+
+        if (ratio > 0.0 && uGather >= 0.95) {
+          float angle = aRandom * 6.283185 + (uTime * (0.35 + aRandom * 0.40));
+          vec2 randomDir = vec2(cos(angle), sin(angle));
+          vec2 radialDir = dist > 0.001 ? normalize(position.xy - uMouse) : randomDir;
+          vec2 scatterDir = normalize(mix(randomDir, radialDir, 0.40));
+          float dispersionDistance = (0.20 + 0.60 * fract(aRandom * 19.41)) * ratio * uRadius * 0.85;
+          float waveX = sin(uTime * 0.9 + aRandom * 12.0) * 0.02 * ratio;
+          float waveY = cos(uTime * 0.8 + aRandom * 18.0) * 0.02 * ratio;
+
+          pos.xy += scatterDir * dispersionDistance + vec2(waveX, waveY);
+          pos.z += (sin(uTime * 0.7 + aRandom * 6.28) * 0.18 + (aRandom - 0.5) * 0.28) * ratio;
+        }
+
+        // 3. Scroll Dissolution
+        if (uScrollProgress > 0.0) {
+          float scrollUp = uScrollProgress * (0.65 + aRandom * 0.85);
+          float scrollDrift = sin(pos.y * 3.5 + uTime * 1.5 + aRandom * 6.28) * uScrollProgress * 0.35;
+          pos.y += scrollUp;
+          pos.x += scrollDrift;
+          pos.z += (aRandom - 0.5) * uScrollProgress * 0.9;
+        }
+
+        vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+        gl_Position = projectionMatrix * mvPosition;
+
+        // Luminous sizing during gathering, settling to fine stardust grains
+        float gatherSizeBoost = (1.0 - smoothstep(0.70, 1.0, uGather)) * 1.8;
+        float baseSize = (2.6 + ratio * 3.2 + gatherSizeBoost) * uPixelRatio * (1.8 / -mvPosition.z);
+        gl_PointSize = baseSize * max(0.0, 1.0 - uScrollProgress * 0.85);
+      }
+    `;
+
+    const pointsFragmentShader = `
+      uniform sampler2D uTexture;
+      uniform float uIsDark;
+      varying vec2 vUv;
+      varying float vRatio;
+      varying float vScroll;
+      varying float vGather;
+
+      void main() {
+        vec2 coord = gl_PointCoord - vec2(0.5);
+        float d = length(coord);
+        if (d > 0.5) discard;
+
+        vec4 tex = texture2D(uTexture, vUv);
+        if (tex.a < 0.04) discard;
+
+        // Activity:
+        // During gathering, all particles are 100% active and visible!
+        // Once assembled, they seamlessly hand off to the razor-sharp solid photograph.
+        float gatherActivity = 1.0 - smoothstep(0.85, 0.99, vGather);
+        float activity = max(gatherActivity, max(vRatio, smoothstep(0.05, 0.6, vScroll)));
+        if (activity <= 0.01) discard;
+
+        vec3 photoColor = tex.rgb;
+
+        // Warm celestial ember luminescence during flight
+        float gatherGlow = (1.0 - smoothstep(0.70, 1.0, vGather)) * 0.45;
+        vec3 warmSpark = vec3(0.96, 0.78, 0.48);
+        vec3 finalColor = mix(photoColor, warmSpark, max(vRatio * 0.45, gatherGlow));
+
+        // Soft feathered circular mask for stardust aesthetic
+        float circleMask = smoothstep(0.5, 0.08, d);
+
+        // Alpha calculation
+        float handoffFade = 1.0 - smoothstep(0.90, 1.0, vGather);
+        float activeAlpha = max(handoffFade, smoothstep(0.0, 0.25, max(vRatio, smoothstep(0.05, 0.6, vScroll))));
+
+        float particleAlpha = tex.a * circleMask * activeAlpha * (1.0 - smoothstep(0.35, 0.92, vScroll));
+        if (particleAlpha <= 0.01) discard;
+
+        gl_FragColor = vec4(finalColor, particleAlpha);
+      }
+    `;
+
+    const pointsMat = new THREE.ShaderMaterial({
+      vertexShader: pointsVertexShader,
+      fragmentShader: pointsFragmentShader,
+      uniforms,
+      transparent: true,
+      depthTest: false,
+    });
+
+    const points = new THREE.Points(pointsGeo, pointsMat);
+    scene.add(points);
+
+    // =========================================================================
+    // FIRST LOAD GATHERING TIMELINE (Unhurried, poetic cosmic assembly)
+    // =========================================================================
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      uniforms.uGather.value = 1.0;
+    } else {
+      gsap.to(uniforms.uGather, {
+        value: 1.0,
+        duration: 2.2,
+        ease: 'power3.out',
+        delay: 0.15
+      });
+    }
+
+    // Mouse coordinates mapped to 3D world space
+    let targetX = 999.0;
+    let targetY = 999.0;
+    let mouseX = 999.0;
+    let mouseY = 999.0;
+    let targetHover = 0.0;
+    let currentHover = 0.0;
+
+    const onPointerMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const ndcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const ndcY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+      // Project NDC to plane at z=0
+      const currentCamera = camera;
+      const fovRad = THREE.MathUtils.degToRad(currentCamera.fov);
+      const halfH = Math.tan(fovRad / 2) * currentCamera.position.z;
+      const halfW = halfH * currentCamera.aspect;
+
+      targetX = ndcX * halfW;
+      targetY = ndcY * halfH;
+      targetHover = 1.0;
+    };
+
+    const onPointerEnter = () => {
+      targetHover = 1.0;
+    };
+
+    const onPointerLeave = () => {
+      targetHover = 0.0;
+    };
+
+    canvas.addEventListener('mousemove', onPointerMove);
+    canvas.addEventListener('mouseenter', onPointerEnter);
+    canvas.addEventListener('mouseleave', onPointerLeave);
+
+    const observer = new MutationObserver(() => {
+      uniforms.uIsDark.value = document.documentElement.classList.contains('dark') ? 1.0 : 0.0;
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    let animId: number;
+    const clock = new THREE.Clock();
+
+    function render() {
+      const elapsed = clock.getElapsedTime();
+      uniforms.uTime.value = elapsed;
+
+      // Scroll-driven particle dissolution
+      const heroEl = document.getElementById('hero');
+      if (heroEl) {
+        const rect = heroEl.getBoundingClientRect();
+        const scrollP = Math.max(0, Math.min(1, -rect.top / (rect.height * 0.75)));
+        uniforms.uScrollProgress.value = scrollP;
+      }
+
+      // Silky, damped hover fade & liquid mouse inertia
+      currentHover += (targetHover - currentHover) * 0.06;
+      uniforms.uHover.value = currentHover;
+
+      if (currentHover > 0.005) {
+        if (mouseX > 900.0) {
+          mouseX = targetX;
+          mouseY = targetY;
+        } else {
+          mouseX += (targetX - mouseX) * 0.075;
+          mouseY += (targetY - mouseY) * 0.075;
+        }
+        uniforms.uMouse.value.set(mouseX, mouseY);
+      } else {
+        mouseX = 999.0;
+        mouseY = 999.0;
+        uniforms.uMouse.value.set(999.0, 999.0);
+      }
+
+      renderer.render(scene, camera);
+      animId = requestAnimationFrame(render);
+    }
+
+    render();
+
+    const onResize = () => {
+      if (!canvas) return;
+      width = canvas.clientWidth;
+      height = canvas.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    };
+
+    window.addEventListener('resize', onResize);
+
+    document.addEventListener('astro:before-swap', () => {
+      cancelAnimationFrame(animId);
+      observer.disconnect();
+      window.removeEventListener('resize', onResize);
+      canvas.removeEventListener('mousemove', onPointerMove);
+      canvas.removeEventListener('mouseenter', onPointerEnter);
+      canvas.removeEventListener('mouseleave', onPointerLeave);
+      renderer.dispose();
+      planeGeo.dispose();
+      planeMat.dispose();
+      pointsGeo.dispose();
+      pointsMat.dispose();
+      texture.dispose();
+    }, { once: true });
+  }
+
+  document.addEventListener('astro:page-load', initBoundlessParticleShader);
+</script>

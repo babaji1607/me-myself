@@ -1,0 +1,92 @@
+---
+import { identity } from '../data/identity';
+---
+
+<section id="works" class="py-24 md:py-36 relative border-t border-[#181614]/[0.08]">
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+    <!-- Section Header -->
+    <div class="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-[#181614]/[0.08]">
+      <div class="flex items-center gap-3">
+        <span class="text-xs font-mono-meta text-[#666057] uppercase tracking-widest">03 // Selected Expressions</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-[#181614]/20"></span>
+        <span class="text-xs font-medium text-[#181614]/80">Curated Creations & Inquiries</span>
+      </div>
+      <span class="text-xs font-mono-meta text-[#666057]">2024 — 2025</span>
+    </div>
+
+    <!-- Editorial Showcase Intro -->
+    <div class="mt-14 max-w-2xl">
+      <h2 class="font-serif-editorial text-3xl sm:text-5xl text-[#181614] font-normal leading-tight">
+        Artifacts crafted with deliberate restraint and timeless typographic rhythm.
+      </h2>
+    </div>
+
+    <!-- Works Stream -->
+    <div class="mt-16 space-y-24 md:space-y-36">
+      {identity.projects.map((project, idx) => (
+        <article class={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center ${idx % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
+          <!-- Project Visual -->
+          <div class={`lg:col-span-7 ${idx % 2 === 1 ? 'lg:col-start-6' : ''}`}>
+            <a
+              href={project.link || "#"}
+              class="group block relative rounded-3xl overflow-hidden bg-[#F3EFE6] border border-[#181614]/[0.08] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#181614]"
+            >
+              <div class="overflow-hidden aspect-[16/10]">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  class="w-full h-full object-cover object-center filter contrast-[1.03] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  loading="lazy"
+                />
+              </div>
+              <div class="absolute inset-0 bg-[#181614]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-[#FAF8F5]/90 backdrop-blur-sm border border-[#181614]/[0.08] text-[11px] font-mono-meta text-[#181614]">
+                {project.year}
+              </div>
+            </a>
+          </div>
+
+          <!-- Project Narrative -->
+          <div class={`lg:col-span-5 space-y-6 ${idx % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+            <div class="space-y-2">
+              <span class="text-xs font-mono-meta text-[#B57F50] uppercase tracking-wider block">
+                Chapter 0{idx + 1} // {project.category}
+              </span>
+              <h3 class="font-serif-editorial text-2xl sm:text-3xl text-[#181614] font-normal leading-snug">
+                {project.title}
+              </h3>
+            </div>
+
+            <p class="text-base text-[#181614]/90 font-normal leading-relaxed">
+              {project.excerpt}
+            </p>
+
+            <p class="text-sm text-[#666057] font-normal leading-relaxed">
+              {project.description}
+            </p>
+
+            <!-- Aspects / Tags -->
+            <div class="flex flex-wrap gap-2 pt-2">
+              {project.aspects.map((aspect) => (
+                <span class="px-3 py-1 rounded-full bg-[#F3EFE6] border border-[#181614]/[0.06] text-xs font-mono-meta text-[#666057]">
+                  {aspect}
+                </span>
+              ))}
+            </div>
+
+            <!-- View Action -->
+            <div class="pt-4">
+              <a
+                href={project.link || "#"}
+                class="group inline-flex items-center gap-2 text-xs font-mono-meta uppercase tracking-wider text-[#181614] hover:text-[#B57F50] transition-colors"
+              >
+                <span>Read case monograph</span>
+                <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

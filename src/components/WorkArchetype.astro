@@ -1,0 +1,430 @@
+---
+import { identity } from '../data/identity';
+
+const { halfFarmer, halfX } = identity.work;
+---
+
+<section id="work" class="py-20 md:py-32 relative border-t border-[#181614]/[0.06] dark:border-white/[0.08]">
+  <div class="max-w-6xl mx-auto px-6 md:px-10">
+    <!-- Pure Typographic Section Intro (No index numbers or descriptive labels) -->
+    <div class="max-w-xl space-y-3 section-title-wrap">
+      <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-[#181614] dark:text-[#FAF8F5]">
+        Half Farmer • Half Solution Architect
+      </h2>
+      <p class="section-desc text-base text-[#615B52] dark:text-[#A39D92] leading-relaxed">
+        Two distinct practices in continuous equilibrium. Drag or glide across the horizon seam to shift the balance.
+      </p>
+    </div>
+
+    <!-- Full-Width Interactive Split Horizon Viewport -->
+    <div
+      id="split-horizon-viewport"
+      class="mt-12 relative w-full h-[540px] sm:h-[600px] rounded-3xl overflow-hidden select-none border border-[#181614]/[0.1] dark:border-white/[0.1] shadow-sm cursor-ew-resize touch-none"
+      style="--split: 50%;"
+    >
+      <!-- ========================================== -->
+      <!-- RIGHT HALF: THE MACHINE / SILICON -->
+      <!-- ========================================== -->
+      <div
+        id="silicon-layer"
+        class="absolute inset-0 bg-[#F2EFE9] dark:bg-[#131211] text-[#181614] dark:text-[#FAF8F5] p-6 sm:p-12 overflow-hidden pointer-events-none"
+        style="clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);"
+      >
+        <!-- Interactive Architectural Topology Canvas -->
+        <canvas id="silicon-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-60 dark:opacity-40"></canvas>
+
+        <!-- Dedicated fading Silicon Content wrapper -->
+        <div id="silicon-content" class="relative z-10 h-full flex flex-col justify-between transition-transform duration-75">
+          <div class="h-6"></div>
+
+          <!-- Center-Right Headline, Ethos & Social Icon Links -->
+          <div class="max-w-[280px] sm:max-w-sm ml-auto space-y-4 text-right">
+            <h3 class="font-heading text-2xl sm:text-3xl font-semibold text-[#181614] dark:text-[#FAF8F5]">
+              {halfX.title}
+            </h3>
+            <p class="text-xs sm:text-sm text-[#615B52] dark:text-[#A39D92] leading-relaxed">
+              {halfX.ethos}
+            </p>
+
+            <!-- Solution Architect Social Links (Icons only) -->
+            <div class="flex items-center justify-end gap-2.5 pt-1 pointer-events-auto">
+              {halfX.socials?.map((social) => (
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-9 h-9 rounded-full bg-[#FAF8F5]/90 dark:bg-[#1C1B18]/90 border border-[#181614]/10 dark:border-white/10 flex items-center justify-center text-[#615B52] dark:text-[#A39D92] hover:text-[#B27B48] dark:hover:text-[#B27B48] hover:border-[#B27B48]/50 dark:hover:border-[#B27B48]/50 hover:scale-110 active:scale-95 transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#B27B48]"
+                  aria-label={social.label}
+                  title={social.label}
+                >
+                  {social.icon === 'github' && (
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                    </svg>
+                  )}
+                  {social.icon === 'linkedin' && (
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.46 1.46 0 1 0 0-2.92 1.46 1.46 0 0 0 0 2.92m1.39 9.74v-8.37H5.07v8.37z" />
+                    </svg>
+                  )}
+                  {social.icon === 'instagram' && (
+                    <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                    </svg>
+                  )}
+                  {social.icon === 'x' && (
+                    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <!-- Right Bottom Practice Tags -->
+          <div class="flex justify-end gap-2 flex-wrap">
+            {halfX.practices.slice(0, 3).map((item) => (
+              <span class="px-3.5 py-1.5 rounded-full bg-[#FAF8F5]/80 dark:bg-[#1C1B18]/80 text-[11px] text-[#615B52] dark:text-[#A39D92] border border-[#181614]/[0.06] dark:border-white/[0.06] backdrop-blur-sm">
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- LEFT HALF: THE LIVING LAND / SOIL -->
+      <!-- ========================================== -->
+      <div
+        id="soil-layer"
+        class="absolute inset-0 bg-[#EAE2D2] dark:bg-[#1E1B17] text-[#181614] dark:text-[#FAF8F5] p-6 sm:p-12 overflow-hidden pointer-events-none"
+        style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);"
+      >
+        <!-- Organic Farmland Background Image (Clean photograph with zero color overlay) -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden select-none">
+          <img
+            src={halfFarmer.image || "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1600&auto=format&fit=crop"}
+            alt="Organic Farmland"
+            class="w-full h-full object-cover object-center transition-all duration-700"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Dedicated fading Soil Content wrapper -->
+        <div id="soil-content" class="relative z-10 h-full flex flex-col justify-between transition-transform duration-75">
+          <div class="h-6"></div>
+
+          <!-- Center-Left Headline & Ethos with refined translucent glass card -->
+          <div class="max-w-[280px] sm:max-w-sm space-y-3 p-4 sm:p-5 rounded-2xl bg-[#FAF8F5]/90 dark:bg-[#121110]/90 backdrop-blur-md border border-[#181614]/[0.08] dark:border-white/[0.1] shadow-sm">
+            <h3 class="font-heading text-2xl sm:text-3xl font-semibold text-[#181614] dark:text-[#FAF8F5]">
+              {halfFarmer.title}
+            </h3>
+            <p class="text-xs sm:text-sm text-[#615B52] dark:text-[#A39D92] leading-relaxed">
+              {halfFarmer.ethos}
+            </p>
+          </div>
+
+          <!-- Left Bottom Practice Tags -->
+          <div class="flex gap-2 flex-wrap">
+            {halfFarmer.practices.slice(0, 3).map((item) => (
+              <span class="px-3.5 py-1.5 rounded-full bg-[#FAF8F5]/90 dark:bg-[#121110]/90 text-[11px] text-[#615B52] dark:text-[#A39D92] border border-[#181614]/[0.08] dark:border-white/[0.08] backdrop-blur-md shadow-xs">
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- CENTRAL HAIRLINE SEAM & TACTILE DRAG HANDLE -->
+      <!-- ========================================== -->
+      <div
+        id="horizon-seam"
+        class="absolute top-0 bottom-0 pointer-events-none flex items-center justify-center transition-[left] duration-75"
+        style="left: clamp(20px, var(--split, 50%), calc(100% - 20px)); transform: translateX(-50%);"
+      >
+        <!-- Vertical Hairline Seam -->
+        <div class="w-[1px] h-full bg-[#181614]/30 dark:bg-white/30"></div>
+
+        <!-- Center Tactile Pill Handle -->
+        <div
+          id="horizon-pill-handle"
+          role="slider"
+          tabindex="0"
+          aria-label="Balance between Soil and Silicon"
+          aria-valuenow="50"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          class="absolute w-10 h-10 rounded-full bg-[#FAF8F5] dark:bg-[#121110] border border-[#181614]/25 dark:border-white/25 shadow-lg flex items-center justify-center text-[#181614] dark:text-[#FAF8F5] transition-transform duration-150 hover:scale-110 active:scale-95 pointer-events-auto cursor-ew-resize focus:outline-none focus:ring-2 focus:ring-[#B27B48]"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l-3 3 3 3m8-6l3 3-3 3"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupSplitHorizon() {
+    const viewport = document.getElementById('split-horizon-viewport');
+    const pillHandle = document.getElementById('horizon-pill-handle');
+    const siliconCanvas = document.getElementById('silicon-canvas') as HTMLCanvasElement;
+    const soilLayer = document.getElementById('soil-layer');
+    const siliconLayer = document.getElementById('silicon-layer');
+    const soilContent = document.getElementById('soil-content');
+    const siliconContent = document.getElementById('silicon-content');
+
+    if (!viewport) return;
+
+    let isDragging = false;
+    let targetSplit = 50;
+    let currentSplit = 50;
+
+    function setSplitPosition(clientX: number) {
+      const rect = viewport!.getBoundingClientRect();
+      const rawPct = ((clientX - rect.left) / rect.width) * 100;
+      targetSplit = Math.max(0, Math.min(100, rawPct));
+    }
+
+    viewport.addEventListener('pointerdown', (e) => {
+      if ((e.target as HTMLElement)?.closest('a, button')) return;
+      isDragging = true;
+      viewport.setPointerCapture(e.pointerId);
+      setSplitPosition(e.clientX);
+    });
+
+    viewport.addEventListener('pointermove', (e) => {
+      if (isDragging) {
+        setSplitPosition(e.clientX);
+      } else {
+        const rect = viewport!.getBoundingClientRect();
+        const rawPct = ((e.clientX - rect.left) / rect.width) * 100;
+        if (Math.abs(rawPct - currentSplit) < 16) {
+          targetSplit = Math.max(0, Math.min(100, currentSplit + (rawPct - currentSplit) * 0.15));
+        }
+      }
+    });
+
+    viewport.addEventListener('pointerup', (e) => {
+      isDragging = false;
+      try { viewport.releasePointerCapture(e.pointerId); } catch (_) {}
+    });
+
+    viewport.addEventListener('pointercancel', () => {
+      isDragging = false;
+    });
+
+    // Keyboard support for accessible slider
+    if (pillHandle) {
+      pillHandle.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          targetSplit = Math.max(0, targetSplit - 5);
+          e.preventDefault();
+        } else if (e.key === 'ArrowRight') {
+          targetSplit = Math.min(100, targetSplit + 5);
+          e.preventDefault();
+        } else if (e.key === 'Home') {
+          targetSplit = 0;
+          e.preventDefault();
+        } else if (e.key === 'End') {
+          targetSplit = 100;
+          e.preventDefault();
+        }
+      });
+    }
+
+    // Inertial update loop for buttery smooth slider motion
+    let rafId: number;
+    function updateSlider() {
+      currentSplit += (targetSplit - currentSplit) * 0.16;
+      const splitStr = `${currentSplit.toFixed(2)}%`;
+      viewport!.style.setProperty('--split', splitStr);
+
+      // Layer clipping and total hide at extremes
+      if (currentSplit >= 99) {
+        if (siliconLayer) siliconLayer.style.display = 'none';
+        if (soilLayer) {
+          soilLayer.style.display = 'block';
+          soilLayer.style.clipPath = 'none';
+        }
+      } else if (currentSplit <= 1) {
+        if (soilLayer) soilLayer.style.display = 'none';
+        if (siliconLayer) {
+          siliconLayer.style.display = 'block';
+          siliconLayer.style.clipPath = 'none';
+        }
+      } else {
+        if (soilLayer) {
+          soilLayer.style.display = 'block';
+          soilLayer.style.clipPath = `polygon(0 0, ${splitStr} 0, ${splitStr} 100%, 0 100%)`;
+        }
+        if (siliconLayer) {
+          siliconLayer.style.display = 'block';
+          siliconLayer.style.clipPath = `polygon(${splitStr} 0, 100% 0, 100% 100%, ${splitStr} 100%)`;
+        }
+      }
+
+      // Progressive content fading so text never gets awkwardly clipped
+      let siliconOpacity = 1;
+      let siliconShift = 0;
+      if (currentSplit > 50) {
+        const p = (currentSplit - 50) / 28; // 0 at 50%, 1.0 at 78%
+        siliconOpacity = Math.max(0, Math.min(1, 1 - p));
+        siliconShift = (1 - siliconOpacity) * 24;
+      }
+      if (siliconContent) {
+        siliconContent.style.opacity = siliconOpacity.toFixed(3);
+        siliconContent.style.transform = `translateX(${siliconShift.toFixed(1)}px)`;
+        siliconContent.style.visibility = siliconOpacity <= 0.01 ? 'hidden' : 'visible';
+      }
+
+      let soilOpacity = 1;
+      let soilShift = 0;
+      if (currentSplit < 50) {
+        const p = (50 - currentSplit) / 28; // 0 at 50%, 1.0 at 22%
+        soilOpacity = Math.max(0, Math.min(1, 1 - p));
+        soilShift = -(1 - soilOpacity) * 24;
+      }
+      if (soilContent) {
+        soilContent.style.opacity = soilOpacity.toFixed(3);
+        soilContent.style.transform = `translateX(${soilShift.toFixed(1)}px)`;
+        soilContent.style.visibility = soilOpacity <= 0.01 ? 'hidden' : 'visible';
+      }
+
+      if (pillHandle) {
+        pillHandle.setAttribute('aria-valuenow', Math.round(currentSplit).toString());
+      }
+
+      rafId = requestAnimationFrame(updateSlider);
+    }
+    updateSlider();
+
+    // ===============================================
+    // ARCHITECTURAL TOPOLOGY CANVAS (Right)
+    // ===============================================
+    let siliconAnimId: number;
+    if (siliconCanvas) {
+      const ctx = siliconCanvas.getContext('2d')!;
+      let w = (siliconCanvas.width = siliconCanvas.clientWidth);
+      let h = (siliconCanvas.height = siliconCanvas.clientHeight);
+
+      const nodes = [
+        { x: 0.55 * w, y: 0.28 * h, label: 'Gateway' },
+        { x: 0.72 * w, y: 0.22 * h, label: 'Mesh' },
+        { x: 0.88 * w, y: 0.35 * h, label: 'Edge CDN' },
+        { x: 0.65 * w, y: 0.52 * h, label: 'Event Bus' },
+        { x: 0.82 * w, y: 0.62 * h, label: 'Orchestrator' },
+        { x: 0.60 * w, y: 0.78 * h, label: 'Worker' },
+        { x: 0.78 * w, y: 0.82 * h, label: 'Primary DB' }
+      ];
+
+      const edges = [
+        [0, 1], [1, 2], [0, 3], [1, 3],
+        [3, 4], [4, 5], [4, 6], [3, 6]
+      ];
+
+      let packets = [
+        { edgeIndex: 0, progress: 0.1, speed: 0.008 },
+        { edgeIndex: 2, progress: 0.6, speed: 0.006 },
+        { edgeIndex: 4, progress: 0.3, speed: 0.010 },
+        { edgeIndex: 7, progress: 0.8, speed: 0.007 }
+      ];
+
+      let mouse = { x: -999, y: -999 };
+
+      viewport.addEventListener('mousemove', (e) => {
+        const rect = siliconCanvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+
+      function renderSilicon() {
+        if (currentSplit < 99) {
+          ctx.clearRect(0, 0, w, h);
+
+          const isDark = document.documentElement.classList.contains('dark');
+          const lineColor = isDark ? 'rgba(255, 255, 255, 0.10)' : 'rgba(24, 22, 20, 0.10)';
+          const activeLineColor = isDark ? 'rgba(255, 255, 255, 0.25)' : 'rgba(24, 22, 20, 0.25)';
+          const nodeColor = isDark ? 'rgba(255, 255, 255, 0.6)' : 'rgba(24, 22, 20, 0.6)';
+          const packetColor = '#B27B48';
+
+          edges.forEach(([fromIdx, toIdx]) => {
+            const from = nodes[fromIdx];
+            const to = nodes[toIdx];
+
+            const distFrom = Math.hypot(from.x - mouse.x, from.y - mouse.y);
+            const distTo = Math.hypot(to.x - mouse.x, to.y - mouse.y);
+            const isNear = distFrom < 120 || distTo < 120;
+
+            ctx.strokeStyle = isNear ? activeLineColor : lineColor;
+            ctx.lineWidth = isNear ? 1.5 : 1.0;
+
+            ctx.beginPath();
+            ctx.moveTo(from.x, from.y);
+            ctx.lineTo(to.x, to.y);
+            ctx.stroke();
+          });
+
+          packets.forEach((p) => {
+            p.progress += p.speed;
+            if (p.progress >= 1) p.progress = 0;
+
+            const [fromIdx, toIdx] = edges[p.edgeIndex];
+            const from = nodes[fromIdx];
+            const to = nodes[toIdx];
+
+            const px = from.x + (to.x - from.x) * p.progress;
+            const py = from.y + (to.y - from.y) * p.progress;
+
+            ctx.fillStyle = packetColor;
+            ctx.beginPath();
+            ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
+          nodes.forEach((node) => {
+            const dist = Math.hypot(node.x - mouse.x, node.y - mouse.y);
+            const isHovered = dist < 45;
+
+            ctx.fillStyle = isHovered ? packetColor : nodeColor;
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, isHovered ? 4.5 : 3.0, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (isHovered) {
+              ctx.strokeStyle = packetColor;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.arc(node.x, node.y, 8, 0, Math.PI * 2);
+              ctx.stroke();
+            }
+          });
+        }
+
+        siliconAnimId = requestAnimationFrame(renderSilicon);
+      }
+      renderSilicon();
+    }
+
+    const onResize = () => {
+      if (siliconCanvas) {
+        siliconCanvas.width = siliconCanvas.clientWidth;
+        siliconCanvas.height = siliconCanvas.clientHeight;
+      }
+    };
+    window.addEventListener('resize', onResize);
+
+    document.addEventListener('astro:before-swap', () => {
+      cancelAnimationFrame(rafId);
+      if (siliconAnimId) cancelAnimationFrame(siliconAnimId);
+      window.removeEventListener('resize', onResize);
+    }, { once: true });
+  }
+
+  document.addEventListener('astro:page-load', setupSplitHorizon);
+</script>

@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { identity } from '../../data/identity';
+
+const memories = identity.memories;
+
+const expandedMemories = [
+  ...memories,
+  {
+    id: "05",
+    type: "image",
+    title: "Rajasthan Horizon at Twilight",
+    location: "Merta Hinterland",
+    caption: "The desert cooling down as dusk settles over the fields. The horizon dissolves into twilight gradient.",
+    mediaUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop",
+    spanClass: "col-span-12 md:col-span-6"
+  },
+  {
+    id: "06",
+    type: "image",
+    title: "Morning Dew on Green Sprouts",
+    location: "Nursery Beds",
+    caption: "Tender shoots drinking the first moisture of morning before the Thar heat begins.",
+    mediaUrl: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=1000&auto=format&fit=crop",
+    spanClass: "col-span-12 md:col-span-6"
+  }
+];
+---
+
+<Layout
+  title={`Living Memory & Visual Archive — ${identity.name}`}
+  description="Visual contemplation of natural soil, rivers, desert light, and stillness."
+>
+  <Header />
+
+  <main id="main-content" class="flex-1 pt-28 sm:pt-36 pb-24 md:pb-36">
+    <div class="max-w-6xl mx-auto px-6 md:px-10">
+      
+      <!-- Breadcrumb Navigation -->
+      <nav class="mb-8 flex items-center gap-2 text-xs font-mono text-[#615B52] dark:text-[#A39D92]">
+        <a href="/#hero" class="hover:text-[#181614] dark:hover:text-[#FAF8F5] transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-[#B27B48] font-semibold">Living Memory</span>
+      </nav>
+
+      <!-- Memories Page Header -->
+      <header class="space-y-4 pb-12 border-b border-[#181614]/[0.08] dark:border-white/[0.08]">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#B27B48] animate-pulse"></span>
+          <span class="text-xs font-mono uppercase tracking-widest text-[#615B52] dark:text-[#A39D92]">
+            Visual Archive // Video & Film
+          </span>
+        </div>
+        <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-[#181614] dark:text-[#FAF8F5]">
+          Living Memory Archive
+        </h1>
+        <p class="text-base sm:text-lg text-[#615B52] dark:text-[#A39D92] leading-relaxed max-w-2xl font-normal">
+          A physical record of Rajasthan earth, flowing water, and quiet hours. Unfiltered, silent, and contemplative.
+        </p>
+      </header>
+
+      <!-- Bento Grid Archive -->
+      <div class="mt-14 grid grid-cols-12 gap-6 md:gap-8">
+        {expandedMemories.map((item) => (
+          <div class={`${item.spanClass} group relative rounded-[28px] overflow-hidden bg-[#EAE3D4] dark:bg-[#1F1E1B] border border-[#181614]/[0.08] dark:border-white/[0.08] shadow-sm hover:shadow-xl transition-all duration-400 hover:border-[#181614]/25 dark:hover:border-white/25 flex flex-col justify-between`}>
+            
+            <!-- Media Container -->
+            <div class="w-full aspect-[16/10] md:aspect-auto md:h-[380px] overflow-hidden bg-[#E2DAC8] dark:bg-[#2A2825] relative">
+              {item.type === 'video' ? (
+                <div class="relative w-full h-full">
+                  <video
+                    class="w-full h-full object-cover filter contrast-[1.03]"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    poster={item.posterUrl}
+                  >
+                    <source src={item.mediaUrl} type="video/mp4" />
+                    <source src="/videos/wheat-field.webm" type="video/webm" />
+                  </video>
+                  <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono uppercase tracking-wider text-white/90 border border-white/10 flex items-center gap-1.5 pointer-events-none">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#B27B48] animate-pulse"></span>
+                    <span>Continuous Reel</span>
+                  </div>
+                </div>
+              ) : (
+                <img
+                  src={item.mediaUrl}
+                  alt={item.title}
+                  class="w-full h-full object-cover filter contrast-[1.03] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  loading="lazy"
+                  onerror="this.src='https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1000&auto=format&fit=crop'"
+                />
+              )}
+            </div>
+
+            <!-- Monograph Caption Bar Below Frame -->
+            <div class="p-5 sm:p-6 bg-[#FAF8F5] dark:bg-[#161514] border-t border-[#181614]/[0.06] dark:border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div class="space-y-0.5">
+                <h3 class="font-heading font-semibold text-sm text-[#181614] dark:text-[#FAF8F5]">
+                  {item.title}
+                </h3>
+                <p class="text-xs text-[#615B52] dark:text-[#A39D92]">
+                  {item.caption}
+                </p>
+              </div>
+              <span class="text-[11px] font-mono text-[#B27B48] shrink-0 font-medium">
+                {item.location}
+              </span>
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+      <!-- Back to Sanctuary -->
+      <div class="mt-16 pt-8 border-t border-[#181614]/[0.08] dark:border-white/[0.08] flex items-center justify-between">
+        <a
+          href="/#memories"
+          class="inline-flex items-center gap-2 text-xs font-semibold text-[#615B52] dark:text-[#A39D92] hover:text-[#181614] dark:hover:text-[#FAF8F5] transition-colors"
+        >
+          <span>← Back to Sanctuary</span>
+        </a>
+
+        <div class="text-xs font-mono text-[#615B52]/60 dark:text-[#A39D92]/60">
+          {expandedMemories.length} Frames Documented
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,130 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Mohit — Half Farmer • Half Solution Architect",
+  description = "A quiet sanctuary bridging regenerative agriculture and strategic solution architecture. Guided by Advaita, Gita, and Jung."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO & Metadata -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    
+    <!-- Two High-Taste Clean Fonts: Plus Jakarta Sans (Headings) + Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Theme Initialization: Light by default, respects stored preference -->
+    <script is:inline>
+      (function() {
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+
+    <!-- Seamless View Transitions -->
+    <ClientRouter fallback="animate" />
+  </head>
+  <body class="bg-[#FAF8F5] dark:bg-[#121110] text-[#181614] dark:text-[#FAF8F5] font-body antialiased min-h-screen relative overflow-x-hidden transition-colors duration-300">
+    <!-- Ambient Diffused Light Wash (Adapts to Light / Dark) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+      <div class="absolute -top-[15%] -left-[10%] w-[55vw] h-[55vw] rounded-full bg-[#F5ECE1]/60 dark:bg-[#201D19]/40 blur-[140px]"></div>
+      <div class="absolute top-[35%] -right-[15%] w-[60vw] h-[60vw] rounded-full bg-[#EFE7D8]/50 dark:bg-[#1E1C19]/35 blur-[160px]"></div>
+      <div class="absolute -bottom-[15%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-[#F3EFE6]/70 dark:bg-[#181715]/40 blur-[150px]"></div>
+    </div>
+
+    <!-- Main Content Flow -->
+    <div class="relative z-10 flex flex-col min-h-screen">
+      <slot />
+    </div>
+
+    <!-- Award-Winning Motion Orchestrator (Lenis + GSAP ScrollTrigger) -->
+    <script>
+      import Lenis from 'lenis';
+      import gsap from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      import { initMotion, cleanupMotion } from '../scripts/motion';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      let lenis: Lenis | null = null;
+      let tickerCallback: ((time: number) => void) | null = null;
+
+      function setupExperience() {
+        if (lenis) {
+          lenis.destroy();
+        }
+        if (tickerCallback) {
+          gsap.ticker.remove(tickerCallback);
+        }
+        cleanupMotion();
+
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!prefersReduced) {
+          lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            gestureOrientation: 'vertical',
+            smoothWheel: true,
+            wheelMultiplier: 0.95,
+          });
+
+          // Expose Lenis globally for interactive navigation
+          (window as any).__lenis = lenis;
+
+          // Sync Lenis scroll with GSAP ScrollTrigger
+          lenis.on('scroll', ScrollTrigger.update);
+
+          tickerCallback = (time: number) => {
+            lenis?.raf(time * 1000);
+          };
+          gsap.ticker.add(tickerCallback);
+          gsap.ticker.lagSmoothing(0);
+        }
+
+        // Initialize Site-Wide Motion
+        initMotion();
+      }
+
+      document.addEventListener('astro:page-load', setupExperience);
+
+      document.addEventListener('astro:before-swap', () => {
+        cleanupMotion();
+        if (lenis) {
+          lenis.destroy();
+        }
+        if (tickerCallback) {
+          gsap.ticker.remove(tickerCallback);
+        }
+      });
+    </script>
+  </body>
+</html>

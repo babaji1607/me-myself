@@ -1,0 +1,81 @@
+---
+import { identity } from '../data/identity';
+---
+
+<section id="inquiries" class="py-24 md:py-36 relative border-t border-[#181614]/[0.08] bg-[#F7F4EC]/30">
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+    <!-- Section Header -->
+    <div class="flex items-center gap-3 pb-8 border-b border-[#181614]/[0.08]">
+      <span class="text-xs font-mono-meta text-[#666057] uppercase tracking-widest">04 // Intellectual Inquiries</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-[#181614]/20"></span>
+      <span class="text-xs font-medium text-[#181614]/80">Essays, Notes & Influences</span>
+    </div>
+
+    <!-- Editorial Essays List -->
+    <div class="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+      <div class="lg:col-span-8 space-y-10">
+        <h2 class="font-serif-editorial text-3xl sm:text-4xl text-[#181614] font-normal leading-tight">
+          Reflections on quiet software, digital permanence, and the ethics of attention.
+        </h2>
+
+        <div class="divide-y divide-[#181614]/[0.08]">
+          {identity.essays.map((essay) => (
+            <article class="py-8 group transition-colors duration-200">
+              <a href={essay.link || "#"} class="block space-y-3 focus:outline-none">
+                <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono-meta text-[#666057]">
+                  <span class="text-[#B57F50]">{essay.category}</span>
+                  <span>{essay.date} • {essay.readingTime}</span>
+                </div>
+                <h3 class="font-serif-editorial text-2xl text-[#181614] group-hover:text-[#B57F50] transition-colors duration-200 leading-snug">
+                  {essay.title}
+                </h3>
+                <p class="text-sm text-[#666057] leading-relaxed max-w-2xl">
+                  {essay.excerpt}
+                </p>
+                <div class="pt-1 flex items-center gap-1.5 text-xs font-mono-meta text-[#181614] group-hover:translate-x-1 transition-transform duration-200">
+                  <span>Read essay</span>
+                  <span>→</span>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right Column: Curated Taste & References -->
+      <div class="lg:col-span-4 space-y-8">
+        <div class="p-8 rounded-3xl bg-[#FAF8F5] border border-[#181614]/[0.08] shadow-sm space-y-6">
+          <div>
+            <span class="text-xs font-mono-meta uppercase tracking-widest text-[#666057] block mb-2">Curated Canon</span>
+            <h3 class="font-serif-editorial text-xl text-[#181614]">Influences & Standards</h3>
+            <p class="text-xs text-[#666057] mt-1 leading-relaxed">
+              The aesthetic traditions and thinkers that ground my creative judgment.
+            </p>
+          </div>
+
+          <div class="space-y-6 pt-2">
+            {identity.curatedTastes.map((taste) => (
+              <div class="space-y-2">
+                <span class="text-[11px] font-mono-meta text-[#B57F50] uppercase tracking-wider block">
+                  {taste.category}
+                </span>
+                <ul class="space-y-1">
+                  {taste.items.map((item) => (
+                    <li class="text-xs font-medium text-[#181614] flex items-center gap-2">
+                      <span class="w-1 h-1 rounded-full bg-[#181614]/30"></span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div class="pt-4 border-t border-[#181614]/[0.06] text-xs font-mono-meta text-[#666057]">
+            <span>Archive updated seasonally</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

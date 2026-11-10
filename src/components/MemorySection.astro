@@ -1,0 +1,80 @@
+---
+import { identity } from '../data/identity';
+
+const memories = identity.memories;
+---
+
+<section id="memories" class="py-20 md:py-32 relative border-t border-[#181614]/[0.06] dark:border-white/[0.08] bg-[#F7F4EC]/30 dark:bg-[#171614]/30">
+  <div class="max-w-6xl mx-auto px-6 md:px-10">
+    <!-- Pure Typographic Section Intro (No index numbers or descriptive labels) -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 section-title-wrap">
+      <div class="max-w-xl space-y-3">
+        <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-[#181614] dark:text-[#FAF8F5]">
+          Living Memory
+        </h2>
+        <p class="section-desc text-base text-[#615B52] dark:text-[#A39D92] leading-relaxed">
+          Stillness caught in frames and organic motion. Pure visual contemplation.
+        </p>
+      </div>
+
+      <!-- Quick View All Memories Link in Header -->
+      <a
+        href="/memories"
+        class="hidden sm:inline-flex items-center gap-2 text-xs font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors"
+      >
+        <span>View full archive</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- Pure Bento Grid (Zero Text Clutter / Titles / Descriptions) -->
+    <div id="memory-grid" class="mt-12 grid grid-cols-12 gap-6">
+      {memories.map((item) => (
+        <div class={`memory-card ${item.spanClass} group relative rounded-2xl overflow-hidden bg-[#EAE3D4] dark:bg-[#1F1E1B] border border-[#181614]/[0.08] dark:border-white/[0.08] shadow-sm transition-all duration-300 hover:border-[#181614]/20 dark:hover:border-white/20 opacity-0 translate-y-8`}>
+          <div class="w-full aspect-[16/10] md:aspect-auto md:h-[340px] overflow-hidden bg-[#E2DAC8] dark:bg-[#2A2825] relative">
+            {item.type === 'video' ? (
+              <div class="relative w-full h-full">
+                <video
+                  class="w-full h-full object-cover filter contrast-[1.03]"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  poster={item.posterUrl}
+                >
+                  <source src={item.mediaUrl} type="video/mp4" />
+                  <source src="/videos/wheat-field.webm" type="video/webm" />
+                </video>
+                <!-- Subtle Live Video Badge -->
+                <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md text-[10px] font-mono uppercase tracking-wider text-white/90 border border-white/10 flex items-center gap-1.5 pointer-events-none">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#B27B48] animate-pulse"></span>
+                  <span>Living Field</span>
+                </div>
+              </div>
+            ) : (
+              <img
+                src={item.mediaUrl}
+                alt={item.title || "Contemplative landscape"}
+                class="w-full h-full object-cover filter contrast-[1.03] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                loading="lazy"
+                onerror="this.src='https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1000&auto=format&fit=crop'"
+              />
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- View Full Archive Action Button -->
+    <div class="mt-12 flex justify-center">
+      <a
+        href="/memories"
+        class="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#FAF8F5] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] border border-[#181614]/15 dark:border-white/15 text-xs font-semibold tracking-wide transition-all duration-300 hover:scale-105 shadow-sm focus:outline-none"
+      >
+        <span>View full archive</span>
+        <span>→</span>
+      </a>
+    </div>
+  </div>
+</section>
