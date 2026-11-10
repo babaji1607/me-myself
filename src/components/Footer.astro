@@ -33,66 +33,94 @@ const { contact } = identity;
       </p>
     </div>
 
-    <!-- Contact Info Grid: Email, Phone, WhatsApp, Instagram (Direct & Clean, just like current email) -->
-    <div id="footer-content" class="mt-12 pt-8 border-t border-[#181614]/[0.08] dark:border-white/[0.08] grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 opacity-0 translate-y-6">
+    <!-- Contact Channels: 6-Slot Architectural Grid -->
+    <div id="footer-content" class="mt-12 pt-8 border-t border-[#181614]/[0.08] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 opacity-0 translate-y-6">
       
-      <!-- 1. Email Channel -->
+      <!-- 1. Primary Email Channel -->
       <div class="space-y-2">
         <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
-          Electronic Mail
+          Primary Electronic Mail
         </span>
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="flex flex-col items-start gap-2.5">
           <a
             href={`mailto:${contact.email}`}
-            class="font-heading text-xl sm:text-2xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8 break-all"
           >
             {contact.email}
           </a>
           <button
-            id="copy-email-btn"
             type="button"
-            data-email={contact.email}
-            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none"
+            data-copy={contact.email}
+            class="copy-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm cursor-pointer"
           >
-            <span id="copy-email-label">Copy address</span>
+            <span class="copy-label">Copy address</span>
           </button>
         </div>
       </div>
 
-      <!-- 2. Phone Number Channel -->
+      <!-- 2. Alternate Email Channel -->
       <div class="space-y-2">
         <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
-          Phone Number
+          Alternate Electronic Mail
         </span>
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="flex flex-col items-start gap-2.5">
           <a
-            href={`tel:${contact.phone.replace(/\s+/g, '')}`}
-            class="font-heading text-xl sm:text-2xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+            href={`mailto:${contact.alternateEmail || 'mohit.ashliya@zohomail.in'}`}
+            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8 break-all"
+          >
+            {contact.alternateEmail || 'mohit.ashliya@zohomail.in'}
+          </a>
+          <button
+            type="button"
+            data-copy={contact.alternateEmail || 'mohit.ashliya@zohomail.in'}
+            class="copy-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm cursor-pointer"
+          >
+            <span class="copy-label">Copy address</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Direct Phone Channel -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
+          Direct Line
+        </span>
+        <div class="flex flex-col items-start gap-2.5">
+          <a
+            href={`tel:${(contact.phoneRaw || contact.phone).replace(/\s+/g, '')}`}
+            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
           >
             {contact.phoneDisplay || contact.phone}
           </a>
-          <button
-            id="copy-phone-btn"
-            type="button"
-            data-phone={contact.phone}
-            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none"
-          >
-            <span id="copy-phone-label">Copy number</span>
-          </button>
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              data-copy={contact.phoneRaw || contact.phone}
+              class="copy-btn inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm cursor-pointer"
+            >
+              <span class="copy-label">Copy number</span>
+            </button>
+            <a
+              href={`tel:${(contact.phoneRaw || contact.phone).replace(/\s+/g, '')}`}
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-transparent hover:bg-[#181614]/5 dark:hover:bg-white/5 text-[#615B52] dark:text-[#A39D92] text-xs font-medium transition-colors"
+            >
+              Call ↗
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- 3. WhatsApp Channel -->
+      <!-- 4. WhatsApp Channel -->
       <div class="space-y-2">
         <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
-          WhatsApp
+          WhatsApp Instant
         </span>
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="flex flex-col items-start gap-2.5">
           <a
             href={contact.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="font-heading text-xl sm:text-2xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
           >
             {contact.whatsapp}
           </a>
@@ -100,24 +128,24 @@ const { contact } = identity;
             href={contact.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
           >
             <span>Chat on WhatsApp ↗</span>
           </a>
         </div>
       </div>
 
-      <!-- 4. Instagram Channel -->
+      <!-- 5. Instagram Channel -->
       <div class="space-y-2">
         <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
-          Instagram
+          Visual Journal / Instagram
         </span>
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="flex flex-col items-start gap-2.5">
           <a
             href={contact.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="font-heading text-xl sm:text-2xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
           >
             {contact.instagram}
           </a>
@@ -125,9 +153,34 @@ const { contact } = identity;
             href={contact.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
           >
-            <span>Visit Instagram ↗</span>
+            <span>Visit Profile ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. GitHub Channel -->
+      <div class="space-y-2">
+        <span class="text-[11px] font-mono uppercase tracking-wider text-[#615B52]/70 dark:text-[#A39D92]/70 block">
+          Code & Architecture / GitHub
+        </span>
+        <div class="flex flex-col items-start gap-2.5">
+          <a
+            href={contact.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-heading text-lg sm:text-xl font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#B27B48] dark:hover:text-[#B27B48] transition-colors underline decoration-[#181614]/20 dark:decoration-white/20 underline-offset-8"
+          >
+            {contact.github}
+          </a>
+          <a
+            href={contact.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EFE6] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] text-xs font-medium transition-all duration-200 focus:outline-none shadow-sm"
+          >
+            <span>View Repositories ↗</span>
           </a>
         </div>
       </div>
@@ -158,51 +211,29 @@ const { contact } = identity;
 
 <script>
   function setupCopyButtons() {
-    // Copy Email
-    const copyEmailBtn = document.getElementById('copy-email-btn');
-    const emailLabel = document.getElementById('copy-email-label');
+    const copyBtns = document.querySelectorAll<HTMLButtonElement>('.copy-btn');
 
-    if (copyEmailBtn && emailLabel) {
-      copyEmailBtn.addEventListener('click', async () => {
-        const email = copyEmailBtn.getAttribute('data-email') || '';
+    copyBtns.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const text = btn.getAttribute('data-copy') || '';
+        const label = btn.querySelector('.copy-label') as HTMLElement | null;
+        if (!text) return;
+
         try {
-          await navigator.clipboard.writeText(email);
-          const original = emailLabel.textContent;
-          emailLabel.textContent = 'Copied ✓';
-          copyEmailBtn.classList.add('bg-[#181614]', 'text-[#FAF8F5]', 'dark:bg-[#FAF8F5]', 'dark:text-[#181614]');
+          await navigator.clipboard.writeText(text);
+          const original = label ? label.textContent : 'Copy';
+          if (label) label.textContent = 'Copied ✓';
+          btn.classList.add('bg-[#181614]', 'text-[#FAF8F5]', 'dark:bg-[#FAF8F5]', 'dark:text-[#181614]');
 
           setTimeout(() => {
-            emailLabel.textContent = original;
-            copyEmailBtn.classList.remove('bg-[#181614]', 'text-[#FAF8F5]', 'dark:bg-[#FAF8F5]', 'dark:text-[#181614]');
+            if (label) label.textContent = original;
+            btn.classList.remove('bg-[#181614]', 'text-[#FAF8F5]', 'dark:bg-[#FAF8F5]', 'dark:text-[#181614]');
           }, 2400);
         } catch (err) {
-          console.error('Failed to copy email:', err);
+          console.error('Failed to copy text:', err);
         }
       });
-    }
-
-    // Copy Phone
-    const copyPhoneBtn = document.getElementById('copy-phone-btn');
-    const phoneLabel = document.getElementById('copy-phone-label');
-
-    if (copyPhoneBtn && phoneLabel) {
-      copyPhoneBtn.addEventListener('click', async () => {
-        const phone = copyPhoneBtn.getAttribute('data-phone') || '';
-        try {
-          await navigator.clipboard.writeText(phone);
-          const original = phoneLabel.textContent;
-          phoneLabel.textContent = 'Copied ✓';
-          copyPhoneBtn.classList.add('bg-[#181614]', 'text-[#FAF8F5]', 'dark:bg-[#FAF8F5]', 'dark:text-[#181614]');
-
-          setTimeout(() => {
-            phoneLabel.textContent = original;
-            copyPhoneBtn.classList.remove('bg-[#181614]', 'text-[#FAF8F5]', 'dark:bg-[#FAF8F5]', 'dark:text-[#181614]');
-          }, 2400);
-        } catch (err) {
-          console.error('Failed to copy phone:', err);
-        }
-      });
-    }
+    });
   }
 
   document.addEventListener('astro:page-load', setupCopyButtons);

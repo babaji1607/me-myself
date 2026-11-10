@@ -76,19 +76,23 @@ export interface IdentityData {
   memories: MemoryItem[];
   contact: {
     email: string;
+    alternateEmail?: string;
     phone: string;
+    phoneRaw: string;
     phoneDisplay: string;
     whatsapp: string;
     whatsappUrl: string;
     instagram: string;
     instagramUrl: string;
+    github: string;
+    githubUrl: string;
     note: string;
     socials: { label: string; href: string }[];
   };
 }
 
 export const identity: IdentityData = {
-  name: "Mohit",
+  name: "Mohit Ashliya",
   monogram: "M.A",
   title: "Half Farmer • Half Solution Architect",
   role: "Half Farmer & Half Solution Architect",
@@ -136,8 +140,8 @@ export const identity: IdentityData = {
       image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
       socials: [
         { label: "GitHub", href: "https://github.com/babaji1607", icon: "github" },
+        { label: "Instagram", href: "https://instagram.com/_many_colors_of_life", icon: "instagram" },
         { label: "LinkedIn", href: "https://linkedin.com", icon: "linkedin" },
-        { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
         { label: "X", href: "https://x.com", icon: "x" }
       ]
     }
@@ -313,26 +317,32 @@ export const identity: IdentityData = {
     {
       id: "04",
       type: "image",
-      title: "Living Water & Golden Hour",
-      location: "Desert Oasis",
-      caption: "Patience learned from water that carves stone without brute force, simply through persistent presence.",
-      mediaUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop",
+      title: "The Horizon & Silent Presence",
+      location: "Rajasthan Sanctuary",
+      caption: "Stillness caught in the frame. The witness resting in quiet awareness between earth and architecture.",
+      mediaUrl: "/images/bento-last-grid.webp",
       spanClass: "col-span-12 md:col-span-8"
     }
   ],
   contact: {
-    email: "mohit@example.com",
-    phone: "+91 98765 43210",
-    phoneDisplay: "+91 98765 43210",
-    whatsapp: "+91 98765 43210",
-    whatsappUrl: "https://wa.me/919876543210",
-    instagram: "@mohit.arch",
-    instagramUrl: "https://instagram.com",
+    email: "mohit.ashliya@gmail.com",
+    alternateEmail: "mohit.ashliya@zohomail.in",
+    phone: "+91 80033 21811",
+    phoneRaw: "8003321811",
+    phoneDisplay: "+91 80033 21811",
+    whatsapp: "+91 80033 21811",
+    whatsappUrl: "https://wa.me/918003321811",
+    instagram: "@_many_colors_of_life",
+    instagramUrl: "https://instagram.com/_many_colors_of_life",
+    github: "github.com/babaji1607",
+    githubUrl: "https://github.com/babaji1607",
     note: "Welcoming sincere inquiries on solution architecture, regenerative soil, and quiet strategic systems.",
     socials: [
-      { label: "Wisdom", href: "#wisdom" },
-      { label: "The Archetype", href: "#work" },
-      { label: "Sound", href: "#music" }
+      { label: "GitHub", href: "https://github.com/babaji1607" },
+      { label: "Instagram", href: "https://instagram.com/_many_colors_of_life" },
+      { label: "The Archetype", href: "/#work" },
+      { label: "Wisdom", href: "/#wisdom" },
+      { label: "Sound", href: "/#music" }
     ]
   }
 };
