@@ -312,19 +312,19 @@ export const identity: IdentityData = {
     {
       id: "03",
       type: "image",
-      title: "Solitude & Study",
-      location: "Quiet Hermitage",
-      caption: "Days spent in solitary contemplation, studying Ashtavakra and observing breath.",
-      mediaUrl: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1000&auto=format&fit=crop",
+      title: "The Horizon & Inner Witness",
+      location: "Rajasthan Sanctuary",
+      caption: "Stillness caught in the frame. The witness resting in quiet awareness between earth and architecture.",
+      mediaUrl: "/images/bento-last-grid.webp",
       spanClass: "col-span-12 md:col-span-4"
     },
     {
       id: "04",
       type: "image",
-      title: "The Horizon & Silent Presence",
-      location: "Rajasthan Sanctuary",
-      caption: "Stillness caught in the frame. The witness resting in quiet awareness between earth and architecture.",
-      mediaUrl: "/images/bento-last-grid.webp",
+      title: "Living Water & Golden Hour",
+      location: "Desert Oasis",
+      caption: "Patience learned from water that carves stone without brute force, simply through persistent presence.",
+      mediaUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
       spanClass: "col-span-12 md:col-span-8"
     }
   ],
