@@ -2,15 +2,16 @@
 
 @layer base {
   :root {
-    --bg-canvas: #FAF8F5;
-    --bg-surface: #F3EFE6;
-    --bg-surface-subtle: #F7F4EC;
-    --text-primary: #181614;
-    --text-muted: #615B52;
-    --text-faint: #8E877C;
-    --border-subtle: rgba(24, 22, 20, 0.08);
-    --border-hover: rgba(24, 22, 20, 0.2);
-    --accent: #B27B48;
+    --bg-canvas: #FAF7F2;
+    --bg-surface: #F3ECE2;
+    --bg-surface-subtle: #F8F3EA;
+    --text-primary: #231F1B;
+    --text-muted: #685F53;
+    --text-faint: #968C7E;
+    --border-subtle: rgba(35, 31, 27, 0.08);
+    --border-hover: rgba(35, 31, 27, 0.20);
+    --accent: #B8773E;
+    --accent-soft: rgba(184, 119, 62, 0.12);
     --vinyl-base: #141312;
   }
 
@@ -24,6 +25,7 @@
     --border-subtle: rgba(255, 255, 255, 0.08);
     --border-hover: rgba(255, 255, 255, 0.22);
     --accent: #C78F56;
+    --accent-soft: rgba(199, 143, 86, 0.15);
     --vinyl-base: #0A0A09;
   }
 
@@ -34,7 +36,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   body {
