@@ -1,4 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="16" fill="#181614"/>
-  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="#FAF8F5" font-family="serif" font-style="italic" font-size="16" font-weight="500">J</text>
+  <style>
+    :root {
+      --bg: #181614;
+      --fg: #FAF8F5;
+      --accent: #B27B48;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #FAF8F5;
+        --fg: #181614;
+        --accent: #B27B48;
+      }
+    }
+    .bg-rect { fill: var(--bg); }
+    .monogram { stroke: var(--fg); }
+    .accent-dot { fill: var(--accent); }
+  </style>
+  <rect width="32" height="32" rx="8" class="bg-rect" />
+  <path d="M8 22V10.5L16 17.5L24 10.5V22" class="monogram" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <circle cx="24" cy="7" r="1.75" class="accent-dot" />
 </svg>

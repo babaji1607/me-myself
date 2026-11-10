@@ -135,7 +135,7 @@ export const identity: IdentityData = {
       ],
       image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
       socials: [
-        { label: "GitHub", href: "https://github.com", icon: "github" },
+        { label: "GitHub", href: "https://github.com/babaji1607", icon: "github" },
         { label: "LinkedIn", href: "https://linkedin.com", icon: "linkedin" },
         { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
         { label: "X", href: "https://x.com", icon: "x" }
