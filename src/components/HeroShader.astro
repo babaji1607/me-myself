@@ -10,12 +10,84 @@ const { className = "" } = Astro.props;
   <!-- Boundless Container: NO overflow hidden, canvas bleeds generously into surrounding whitespace -->
   <div
     id="particle-container"
-    class="relative w-full h-full overflow-visible cursor-crosshair group"
+    class="relative w-full h-full overflow-visible cursor-crosshair group flex items-center justify-center"
   >
-    <!-- Expanded canvas allowing particles to overflow and drift freely outside the figure -->
+    <!-- SVG Single Paint Stroke with Uniform Cyan Color (Layer 0: Behind the Person) -->
+    <div
+      id="hero-stroke-layer"
+      class="absolute -inset-x-10 sm:-inset-x-16 md:-inset-x-24 -bottom-16 sm:-bottom-20 top-0 w-[calc(100%+5rem)] sm:w-[calc(100%+8rem)] md:w-[calc(100%+12rem)] h-[calc(100%+4rem)] sm:h-[calc(100%+5rem)] pointer-events-none select-none z-0 overflow-visible flex items-center justify-center will-change-transform"
+      aria-hidden="true"
+    >
+      <svg
+        id="hero-cyan-stroke"
+        viewBox="0 0 1920 1072"
+        style="width: 100%; height: 84.3%;"
+        class="overflow-visible pointer-events-none select-none"
+        preserveAspectRatio="xMidYMid meet"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <mask id="hero-stroke-mask" maskUnits="userSpaceOnUse">
+            <path
+              id="hero-stroke-mask-line"
+              d="
+                M 1850 65
+                L 1730 290
+                L 1650 100
+                L 1530 330
+                L 1450 145
+                L 1330 380
+                L 1240 190
+                L 1120 490
+                L 1020 240
+                L 900 520
+                L 800 280
+                L 680 560
+                L 580 330
+                L 460 590
+                L 360 375
+                L 240 610
+                L 170 470
+                L 150 580
+              "
+              fill="none"
+              stroke="white"
+              stroke-width="210"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </mask>
+        </defs>
+
+        <!-- Single Paint Stroke with Uniform Cyan Color (Wider, Painted Zig-Zag Top-to-Bottom) -->
+        <g id="hero-stroke-group" class="opacity-0" mask="url(#hero-stroke-mask)">
+          <path
+            id="hero-single-paint-stroke"
+            d="
+              M 230 400
+              C 380 360, 560 320, 770 290
+              C 990 260, 1220 220, 1460 170
+              C 1610 135, 1750 95, 1840 55
+              C 1865 45, 1880 70, 1855 95
+              C 1795 155, 1715 215, 1625 270
+              C 1445 365, 1245 435, 1045 490
+              C 845 545, 645 585, 455 610
+              C 340 620, 240 615, 165 590
+              C 140 580, 140 545, 160 515
+              C 180 475, 205 430, 230 400
+              Z
+            "
+            fill="#00F0FF"
+          />
+        </g>
+      </svg>
+    </div>
+
+    <!-- Expanded canvas allowing particles to overflow and drift freely outside the figure (Layer 1: The Person Figure) -->
     <canvas
       id="hero-particle-canvas"
-      class="absolute -inset-x-10 sm:-inset-x-16 md:-inset-x-24 -bottom-16 sm:-bottom-20 top-0 w-[calc(100%+5rem)] sm:w-[calc(100%+8rem)] md:w-[calc(100%+12rem)] h-[calc(100%+4rem)] sm:h-[calc(100%+5rem)] block pointer-events-auto touch-none"
+      class="absolute -inset-x-10 sm:-inset-x-16 md:-inset-x-24 -bottom-16 sm:-bottom-20 top-0 w-[calc(100%+5rem)] sm:w-[calc(100%+8rem)] md:w-[calc(100%+12rem)] h-[calc(100%+4rem)] sm:h-[calc(100%+5rem)] block pointer-events-auto touch-none z-10"
     ></canvas>
   </div>
 </div>
@@ -320,17 +392,50 @@ const { className = "" } = Astro.props;
     scene.add(points);
 
     // =========================================================================
+    // SVG SINGLE PAINT STROKE ANIMATION (Paints dynamically behind the person)
+    // =========================================================================
+    function playPaintStroke() {
+      const strokeGroup = document.getElementById('hero-stroke-group');
+      const maskLine = document.getElementById('hero-stroke-mask-line') as SVGPathElement | null;
+      if (!strokeGroup || !maskLine) return;
+
+      const totalLength = maskLine.getTotalLength();
+      maskLine.style.strokeDasharray = `${totalLength}`;
+      maskLine.style.strokeDashoffset = `${totalLength}`;
+
+      if (prefersReduced) {
+        strokeGroup.style.opacity = '1';
+        maskLine.style.strokeDashoffset = '0';
+        return;
+      }
+
+      // Smooth energetic brush sweep revealing uniform cyan paint stroke with painted zig-zag from top to bottom
+      gsap.timeline()
+        .set(strokeGroup, { opacity: 1 })
+        .to(maskLine, {
+          strokeDashoffset: 0,
+          duration: 0.95,
+          ease: 'power2.out'
+        });
+    }
+
+    // =========================================================================
     // FIRST LOAD GATHERING TIMELINE (Unhurried, poetic cosmic assembly)
     // =========================================================================
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
       uniforms.uGather.value = 1.0;
+      playPaintStroke();
     } else {
       gsap.to(uniforms.uGather, {
         value: 1.0,
-        duration: 2.2,
+        duration: 2.0,
         ease: 'power3.out',
-        delay: 0.15
+        delay: 0.1,
+        onComplete: () => {
+          // Progressively paint the cyan single stroke just after the first animation completes
+          playPaintStroke();
+        }
       });
     }
 
@@ -382,12 +487,19 @@ const { className = "" } = Astro.props;
       const elapsed = clock.getElapsedTime();
       uniforms.uTime.value = elapsed;
 
-      // Scroll-driven particle dissolution
+      // Scroll-driven particle & paint stroke dissolution
       const heroEl = document.getElementById('hero');
       if (heroEl) {
         const rect = heroEl.getBoundingClientRect();
         const scrollP = Math.max(0, Math.min(1, -rect.top / (rect.height * 0.75)));
         uniforms.uScrollProgress.value = scrollP;
+
+        const strokeLayer = document.getElementById('hero-stroke-layer');
+        if (strokeLayer) {
+          const strokeFade = Math.max(0, 1.0 - scrollP * 1.5);
+          strokeLayer.style.transform = `translate3d(0, ${-scrollP * 40}px, 0)`;
+          strokeLayer.style.opacity = `${strokeFade}`;
+        }
       }
 
       // Silky, damped hover fade & liquid mouse inertia
@@ -429,6 +541,7 @@ const { className = "" } = Astro.props;
     document.addEventListener('astro:before-swap', () => {
       cancelAnimationFrame(animId);
       observer.disconnect();
+      gsap.killTweensOf(['#hero-stroke-group', '#hero-stroke-mask-line']);
       window.removeEventListener('resize', onResize);
       canvas.removeEventListener('mousemove', onPointerMove);
       canvas.removeEventListener('mouseenter', onPointerEnter);
