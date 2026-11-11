@@ -4,22 +4,22 @@ import { identity } from '../data/identity';
 const tracks = identity.music;
 ---
 
-<section id="music" class="py-20 md:py-32 relative border-t border-[#181614]/[0.06] dark:border-white/[0.08]">
-  <div class="max-w-6xl mx-auto px-6 md:px-10">
-    <!-- Pure Typographic Section Intro (No index numbers or descriptive labels) -->
+<section id="music" class="py-16 sm:py-20 md:py-32 relative border-t border-[#181614]/[0.06] dark:border-white/[0.08]">
+  <div class="max-w-6xl mx-auto px-5 sm:px-6 md:px-10">
+    <!-- Pure Typographic Section Intro -->
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 section-title-wrap">
       <div class="max-w-xl space-y-3">
         <div class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-[#1DB954]"></span>
+          <span class="w-2 h-2 rounded-full bg-[#1DB954] animate-pulse"></span>
           <span class="text-xs font-mono uppercase tracking-widest text-[#615B52] dark:text-[#A39D92]">
-            04 // Curated Audio & Records
+            04 // Curated Audio &amp; Records
           </span>
         </div>
         <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-[#181614] dark:text-[#FAF8F5]">
           Sound Sanctuary
         </h2>
-        <p class="section-desc text-base text-[#615B52] dark:text-[#A39D92] leading-relaxed">
-          Sacred Carnatic vibrations, timeless progressive resonance, and acoustic contemplation on vinyl & Spotify.
+        <p class="section-desc text-sm sm:text-base text-[#615B52] dark:text-[#A39D92] leading-relaxed">
+          Sacred Carnatic vibrations, timeless progressive resonance, and acoustic contemplation on vinyl &amp; Spotify.
         </p>
       </div>
 
@@ -34,50 +34,51 @@ const tracks = identity.music;
     </div>
 
     <!-- Music Cards with Spinning Vinyl + Spotify Players -->
-    <div id="music-grid" class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div id="music-grid" class="mt-10 sm:mt-14 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
       {tracks.map((track) => (
         <div
-          class="music-card group rounded-[28px] p-6 bg-gradient-to-b from-[#FAF8F5] to-[#F5EFE6]/70 dark:from-[#1C1B18] dark:to-[#141312] border border-[#181614]/[0.08] dark:border-white/[0.08] hover:border-[#1DB954]/50 dark:hover:border-[#1DB954]/50 flex flex-col items-center justify-between transition-all duration-400 opacity-0 translate-y-8 shadow-sm hover:shadow-[0_20px_45px_-12px_rgba(29,185,84,0.12)] hover:-translate-y-1.5"
+          class="music-card group rounded-[28px] p-5 sm:p-6 bg-gradient-to-b from-[#FAF8F5] to-[#F5EFE6]/70 dark:from-[#1C1B18] dark:to-[#141312] border border-[#181614]/[0.08] dark:border-white/[0.08] hover:border-[#1DB954]/50 dark:hover:border-[#1DB954]/50 flex flex-col items-center justify-between transition-all duration-300 shadow-sm hover:shadow-[0_20px_45px_-12px_rgba(29,185,84,0.12)]"
           data-track-id={track.id}
           data-spotify-id={track.spotifyId}
         >
           <!-- Spinning Vinyl Record Disc (Spins while Spotify is playing, stops when paused) -->
-          <div class="py-3 flex justify-center w-full">
-            <div class="relative w-36 h-36 sm:w-40 sm:h-40 flex items-center justify-center">
+          <div class="py-2 sm:py-3 flex justify-center w-full">
+            <div class="relative w-32 h-32 sm:w-40 sm:h-40 flex items-center justify-center">
               <div
-                class="record-disc w-36 h-36 sm:w-40 sm:h-40 rounded-full vinyl-disc relative flex items-center justify-center shadow-lg transition-transform duration-300 cursor-pointer"
+                class="record-disc w-32 h-32 sm:w-40 sm:h-40 rounded-full vinyl-disc relative flex items-center justify-center shadow-lg transition-transform duration-300 cursor-pointer active:scale-95 touch-manipulation select-none"
                 data-disc-spotify={track.spotifyId}
                 role="button"
                 tabindex="0"
                 aria-label={`Toggle playback for ${track.title}`}
-                title={`Click to play/pause ${track.title} on Spotify`}
+                title={`Click or tap to play/pause ${track.title}`}
               >
                 <!-- Vinyl Outer Edge Rim -->
                 <div class="absolute inset-0 rounded-full border border-white/10 pointer-events-none"></div>
 
                 <!-- Center Official Spotify Album Artwork Cover with Spindle Hole -->
-                <div class="relative w-18 h-18 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-[#161514] flex items-center justify-center pointer-events-none shadow-inner">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-[#161514] flex items-center justify-center pointer-events-none shadow-inner">
                   <img
                     src={track.coverImage}
                     alt={`${track.title} Spotify Album Cover`}
                     class="w-full h-full object-cover select-none"
                     loading="lazy"
+                    decoding="async"
                   />
                   <!-- Inner Spindle Hole Cutout -->
                   <div class="absolute w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] dark:bg-[#121110] border-2 border-[#D4A373] shadow-xs"></div>
                 </div>
 
-                <!-- Subtle Play/Pause Overlay Icon on Hover -->
-                <div class="disc-play-overlay absolute inset-0 rounded-full bg-black/40 backdrop-blur-[2px] opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity text-white pointer-events-none">
-                  <span class="disc-action-icon text-xs font-mono font-semibold">PLAY</span>
+                <!-- Play/Pause Indicator Overlay -->
+                <div class="disc-play-overlay absolute inset-0 rounded-full bg-black/35 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white pointer-events-none">
+                  <span class="disc-action-icon text-[11px] font-mono font-bold tracking-wider">PLAY</span>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Track Details -->
-          <div class="w-full text-center pt-2 pb-3 space-y-1">
-            <h3 class="font-heading text-lg font-semibold text-[#181614] dark:text-[#FAF8F5] leading-snug">
+          <div class="w-full text-center pt-2 pb-2.5 space-y-1">
+            <h3 class="font-heading text-base sm:text-lg font-semibold text-[#181614] dark:text-[#FAF8F5] leading-snug">
               {track.title}
             </h3>
             <p class="text-xs text-[#615B52] dark:text-[#A39D92] font-medium line-clamp-1">
@@ -89,26 +90,28 @@ const tracks = identity.music;
           </div>
 
           <!-- Official Embedded Spotify Player Container -->
-          <div class="w-full mt-2 rounded-2xl overflow-hidden shadow-xs border border-[#181614]/[0.06] dark:border-white/[0.08] bg-black/5 dark:bg-black/20">
+          <div class="w-full mt-2 rounded-2xl overflow-hidden shadow-xs border border-[#181614]/[0.06] dark:border-white/[0.08] bg-black/5 dark:bg-black/20 transition-all duration-300" id={`player-wrapper-${track.spotifyId}`}>
             <div
               id={`spotify-embed-${track.spotifyId}`}
               class="spotify-embed-slot w-full min-h-[152px]"
               data-spotify-id={track.spotifyId}
             >
               <iframe
-                class="w-full rounded-2xl bg-transparent"
+                id={`spotify-iframe-${track.spotifyId}`}
+                class="w-full rounded-2xl bg-transparent block"
                 src={`https://open.spotify.com/embed/track/${track.spotifyId}?utm_source=generator&theme=0`}
                 width="100%"
                 height="152"
                 frameBorder="0"
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                 loading="lazy"
+                title={`${track.title} - Spotify Player`}
               ></iframe>
             </div>
           </div>
 
           <!-- Bottom Action: Live Playback Status & Open in App Link -->
-          <div class="w-full pt-4 mt-3 border-t border-[#181614]/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs">
+          <div class="w-full pt-3 sm:pt-4 mt-2 sm:mt-3 border-t border-[#181614]/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs">
             <span
               class="playback-status-badge text-[11px] font-mono text-[#615B52] dark:text-[#A39D92] flex items-center gap-1.5"
               data-status-for={track.spotifyId}
@@ -120,7 +123,7 @@ const tracks = identity.music;
               href={track.spotifyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#1DB954] dark:hover:text-[#1DB954] transition-colors"
+              class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-semibold text-[#181614] dark:text-[#FAF8F5] hover:text-[#1DB954] dark:hover:text-[#1DB954] hover:bg-[#181614]/5 dark:hover:bg-white/5 transition-colors touch-manipulation"
             >
               <span>Open in App</span>
               <span>↗</span>
@@ -131,7 +134,7 @@ const tracks = identity.music;
     </div>
 
     <!-- View All Records Action Button -->
-    <div class="mt-12 flex justify-center">
+    <div class="mt-10 sm:mt-12 flex justify-center">
       <a
         href="/music"
         class="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#FAF8F5] dark:bg-[#1C1B18] hover:bg-[#181614] dark:hover:bg-[#FAF8F5] text-[#181614] dark:text-[#FAF8F5] hover:text-[#FAF8F5] dark:hover:text-[#181614] border border-[#181614]/15 dark:border-white/15 text-xs font-semibold tracking-wide transition-all duration-300 hover:scale-105 shadow-sm focus:outline-none"
@@ -155,6 +158,16 @@ const tracks = identity.music;
     const controllers: Record<string, any> = {};
 
     function updateDiscPlayback(spotifyId: string, isPlaying: boolean) {
+      // If one starts playing, pause all others so only one vinyl spins at a time
+      if (isPlaying) {
+        document.querySelectorAll('[data-disc-spotify]').forEach((otherDisc) => {
+          const otherId = otherDisc.getAttribute('data-disc-spotify');
+          if (otherId && otherId !== spotifyId) {
+            updateDiscPlayback(otherId, false);
+          }
+        });
+      }
+
       const disc = document.querySelector(`[data-disc-spotify="${spotifyId}"]`);
       const statusBadge = document.querySelector(`[data-status-for="${spotifyId}"]`);
 
@@ -182,37 +195,9 @@ const tracks = identity.music;
         } else {
           dot?.classList.remove('bg-[#1DB954]', 'animate-pulse');
           dot?.classList.add('bg-[#615B52]/40');
-          if (text) text.textContent = 'Paused';
+          if (text) text.textContent = 'Ready';
         }
       }
-    }
-
-    // Initialize with Spotify IFrame API
-    function initControllers(IFrameAPI: any) {
-      window.__SpotifyIframeAPI = IFrameAPI;
-      const slots = document.querySelectorAll('.spotify-embed-slot');
-
-      slots.forEach((slot) => {
-        const spotifyId = slot.getAttribute('data-spotify-id');
-        if (!spotifyId) return;
-
-        const options = {
-          uri: `spotify:track:${spotifyId}`,
-          width: '100%',
-          height: '152'
-        };
-
-        try {
-          IFrameAPI.createController(slot, options, (EmbedController: any) => {
-            controllers[spotifyId] = EmbedController;
-
-            EmbedController.addListener('playback_update', (e: any) => {
-              const isPlaying = !e.data.isPaused && (e.data.position > 0 || e.data.isBuffering);
-              updateDiscPlayback(spotifyId, isPlaying);
-            });
-          });
-        } catch (_) {}
-      });
     }
 
     // Connect clicking on the vinyl record disc to play / pause
@@ -222,22 +207,42 @@ const tracks = identity.music;
 
       disc.addEventListener('click', () => {
         const ctrl = controllers[spotifyId];
+        const isCurrentlyPlaying = disc.classList.contains('is-playing');
+
         if (ctrl) {
-          ctrl.togglePlay();
-        } else {
-          // Direct fallback
-          const isCurrentlyPlaying = disc.classList.contains('is-playing');
-          updateDiscPlayback(spotifyId, !isCurrentlyPlaying);
+          try {
+            ctrl.togglePlay();
+            return;
+          } catch (_) {}
+        }
+
+        // On mobile or if controller cannot trigger direct playback:
+        // Scroll/focus the Spotify player directly so the user can easily tap play on mobile
+        const playerWrapper = document.getElementById(`player-wrapper-${spotifyId}`);
+        if (playerWrapper) {
+          playerWrapper.classList.add('ring-2', 'ring-[#1DB954]', 'shadow-lg');
+          setTimeout(() => {
+            playerWrapper.classList.remove('ring-2', 'ring-[#1DB954]', 'shadow-lg');
+          }, 1500);
+        }
+
+        // If it was already spinning, stop it
+        if (isCurrentlyPlaying) {
+          updateDiscPlayback(spotifyId, false);
         }
       });
     });
 
-    // Setup Spotify Iframe API script loader
+    // Setup Spotify Iframe API script if available
+    function initSpotifyApi(IFrameAPI: any) {
+      window.__SpotifyIframeAPI = IFrameAPI;
+    }
+
     if (window.__SpotifyIframeAPI) {
-      initControllers(window.__SpotifyIframeAPI);
+      initSpotifyApi(window.__SpotifyIframeAPI);
     } else {
       window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
-        initControllers(IFrameAPI);
+        initSpotifyApi(IFrameAPI);
       };
 
       if (!document.getElementById('spotify-iframe-api-script')) {
@@ -249,13 +254,40 @@ const tracks = identity.music;
       }
     }
 
-    // Secondary listener for Spotify cross-frame postMessage events
+    // Universal message listener for Spotify cross-frame postMessage events
     const onMessage = (event: MessageEvent) => {
       try {
-        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-        if (data && (data.type === 'playback_update' || data.event === 'playback_update')) {
+        let data = event.data;
+        if (typeof data === 'string') {
+          try {
+            data = JSON.parse(data);
+          } catch (_) {
+            return;
+          }
+        }
+
+        if (!data) return;
+
+        // Check for Spotify playback updates
+        if (data.type === 'playback_update' || data.event === 'playback_update') {
           const payload = data.payload || data.data || data;
           const isPlaying = !payload.isPaused && (payload.position > 0 || payload.isBuffering);
+
+          // 1. Match by source window
+          const iframes = document.querySelectorAll<HTMLIFrameElement>('.spotify-embed-slot iframe');
+          for (let i = 0; i < iframes.length; i++) {
+            const ifr = iframes[i];
+            if (ifr.contentWindow === event.source) {
+              const slot = ifr.closest('[data-spotify-id]');
+              const sId = slot?.getAttribute('data-spotify-id');
+              if (sId) {
+                updateDiscPlayback(sId, isPlaying);
+                return;
+              }
+            }
+          }
+
+          // 2. Match by URI in payload
           const trackUri = payload.playingURI || payload.uri || '';
           const match = trackUri.match(/track[:/]([a-zA-Z0-9]+)/);
           if (match && match[1]) {
@@ -264,6 +296,7 @@ const tracks = identity.music;
         }
       } catch (_) {}
     };
+
     window.addEventListener('message', onMessage);
 
     document.addEventListener('astro:before-swap', () => {

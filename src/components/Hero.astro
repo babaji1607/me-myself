@@ -1,15 +1,119 @@
 ---
 import HeroShader from './HeroShader.astro';
+import { identity } from '../data/identity';
 ---
 
-<section id="hero" class="relative pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-20 md:pb-28 overflow-hidden min-h-[95vh] flex flex-col items-center">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 w-full flex flex-col items-center">
-    <!-- 1. Expansive Full-Width Particle Shader Canvas (Top) -->
+<section id="hero" class="relative pt-12 sm:pt-16 md:pt-20 lg:pt-28 pb-16 sm:pb-20 md:pb-28 overflow-hidden min-h-[90vh] lg:min-h-[95vh] flex flex-col items-center justify-center">
+
+  <!-- ========================================================================= -->
+  <!-- 1. MOBILE & TABLET HERO (Tailored for screens < lg: instant load, 0 lag)  -->
+  <!-- ========================================================================= -->
+  <div class="block lg:hidden w-full max-w-2xl mx-auto px-5 sm:px-8 flex flex-col items-center text-center relative z-10">
+    
+    <!-- Micro Status Pill -->
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF8F5]/85 dark:bg-[#1C1B18]/85 border border-[#181614]/[0.08] dark:border-white/[0.10] shadow-xs mb-5 sm:mb-7 backdrop-blur-md">
+      <span class="w-1.5 h-1.5 rounded-full bg-[#B27B48] animate-pulse"></span>
+      <span class="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-[#615B52] dark:text-[#A39D92]">
+        01 // Sakshi Bhava • Soil &amp; Silicon
+      </span>
+    </div>
+
+    <!-- Authentic Figure with Dynamic Cyan Paint Stroke -->
+    <div class="relative w-full max-w-[340px] sm:max-w-[460px] aspect-[4/3] flex items-center justify-center select-none my-2 sm:my-4">
+      
+      <!-- Ambient Radial Aura Glow -->
+      <div class="absolute inset-0 -m-6 sm:-m-10 bg-radial from-[#00F0FF]/15 via-[#B27B48]/10 to-transparent blur-2xl rounded-full pointer-events-none" aria-hidden="true"></div>
+
+      <!-- Signature Dynamic Cyan Paint Stroke (SVG Vector Layer Behind Mohit) -->
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0" aria-hidden="true">
+        <svg
+          viewBox="0 0 1920 1072"
+          class="w-full h-full overflow-visible opacity-90 transition-opacity duration-700"
+          preserveAspectRatio="xMidYMid meet"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="
+              M 230 400
+              C 380 360, 560 320, 770 290
+              C 990 260, 1220 220, 1460 170
+              C 1610 135, 1750 95, 1840 55
+              C 1865 45, 1880 70, 1855 95
+              C 1795 155, 1715 215, 1625 270
+              C 1445 365, 1245 435, 1045 490
+              C 845 545, 645 585, 455 610
+              C 340 620, 240 615, 165 590
+              C 140 580, 140 545, 160 515
+              C 180 475, 205 430, 230 400
+              Z
+            "
+            fill="#00F0FF"
+            class="animate-pulse"
+            style="animation-duration: 4s;"
+          />
+        </svg>
+      </div>
+
+      <!-- High-Performance Authentic Portrait Image (74KB WebP, zero WebGL overhead) -->
+      <img
+        src="/images/hero-figure-mobile.webp"
+        alt={`${identity.name} — Half Farmer • Half Solution Architect`}
+        width="1080"
+        height="603"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        class="relative z-10 w-full h-auto object-contain max-h-[300px] sm:max-h-[400px] drop-shadow-[0_16px_24px_rgba(0,0,0,0.12)] dark:drop-shadow-[0_16px_28px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:scale-[1.01]"
+      />
+    </div>
+
+    <!-- Mobile Hero Typography (Renders immediately without desktop lag) -->
+    <div class="mt-4 sm:mt-6 space-y-3 sm:space-y-4 max-w-xl mx-auto">
+      <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-[#181614] dark:text-[#FAF8F5] leading-[1.12]">
+        <span class="block">Rooted in Soil.</span>
+        <span class="block text-[#181614]/90 dark:text-[#FAF8F5]/90">Awakened in Mind.</span>
+      </h1>
+      
+      <p class="text-sm sm:text-base text-[#615B52] dark:text-[#A39D92] leading-relaxed max-w-md mx-auto font-normal">
+        {identity.subheadline}
+      </p>
+
+      <!-- Fast Mobile Quick Links -->
+      <div class="pt-2 sm:pt-4 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+        <a
+          href="/#work"
+          class="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-[#181614] dark:bg-[#FAF8F5] text-[#FAF8F5] dark:text-[#181614] text-xs font-semibold tracking-wide shadow-sm active:scale-95 transition-transform"
+        >
+          <span>The Archetype</span>
+          <span>→</span>
+        </a>
+        <a
+          href="/#wisdom"
+          class="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-[#FAF8F5]/80 dark:bg-[#1C1B18]/80 text-[#181614] dark:text-[#FAF8F5] border border-[#181614]/15 dark:border-white/15 text-xs font-medium tracking-wide active:scale-95 transition-transform"
+        >
+          <span>Wisdom Notes</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Scroll Cue -->
+    <div class="mt-8 sm:mt-10 flex flex-col items-center gap-1.5 opacity-70">
+      <span class="text-[9px] uppercase font-mono tracking-widest text-[#615B52] dark:text-[#A39D92]">Scroll to explore</span>
+      <div class="w-[1px] h-5 bg-gradient-to-b from-[#B27B48] to-transparent"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 2. DESKTOP HERO (Expansive 3D Particle Stardust Canvas for screens >= lg) -->
+  <!-- ========================================================================= -->
+  <div class="hidden lg:flex max-w-7xl mx-auto px-4 sm:px-6 md:px-10 w-full flex-col items-center">
+    <!-- Expansive Full-Width Particle Shader Canvas (Top) -->
     <div id="hero-shader-wrap" class="w-full flex justify-center overflow-visible select-none">
       <HeroShader />
     </div>
 
-    <!-- 2. Hero Text Below the Figure -->
+    <!-- Hero Text Below the Figure -->
     <div id="hero-text-block" class="mt-16 sm:mt-20 md:mt-24 lg:mt-28 text-center max-w-3xl mx-auto space-y-4 md:space-y-5 relative z-10">
       <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-semibold tracking-tight text-[#181614] dark:text-[#FAF8F5] leading-[1.08]">
         <span class="block overflow-hidden py-1">
@@ -23,11 +127,12 @@ import HeroShader from './HeroShader.astro';
         Divided equally between physical earth and strategic solution architecture.
       </p>
     </div>
+
+    <!-- Quiet Award-Caliber Scroll Prompt -->
+    <div class="hero-scroll-cue mt-8 md:mt-12 flex flex-col items-center gap-2 pointer-events-none">
+      <span class="text-[10px] uppercase font-mono tracking-widest text-[#615B52]/60 dark:text-[#A39D92]/60">Scroll</span>
+      <div class="w-[1px] h-6 bg-gradient-to-b from-[#B27B48]/70 to-transparent"></div>
+    </div>
   </div>
 
-  <!-- Quiet Award-Caliber Scroll Prompt -->
-  <div class="hero-scroll-cue mt-8 md:mt-12 flex flex-col items-center gap-2 pointer-events-none">
-    <span class="text-[10px] uppercase font-mono tracking-widest text-[#615B52]/60 dark:text-[#A39D92]/60">Scroll</span>
-    <div class="w-[1px] h-6 bg-gradient-to-b from-[#B27B48]/70 to-transparent"></div>
-  </div>
 </section>

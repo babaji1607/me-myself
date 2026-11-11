@@ -12,7 +12,7 @@ const navItems = [
 ---
 
 <!-- 1. Top-Left Quiet Brand Mark (Boundless, no top bar) -->
-<aside class="fixed top-6 left-6 md:top-8 md:left-10 z-40 select-none">
+<aside class="fixed top-5 left-5 sm:top-6 sm:left-6 lg:top-8 lg:left-10 z-40 select-none">
   <a href="/#hero" class="group flex items-center gap-3 focus:outline-none">
     <span class="w-8 h-8 rounded-full bg-[#181614] dark:bg-[#FAF8F5] text-[#FAF8F5] dark:text-[#181614] flex items-center justify-center font-heading text-xs font-semibold tracking-wider shadow-sm transition-transform duration-300 group-hover:scale-105">
       {identity.monogram}
@@ -23,8 +23,8 @@ const navItems = [
   </a>
 </aside>
 
-<!-- 2. Desktop Adaptive Side Dock (Self-contained, seamless liquid corner transition, automatic spy) -->
-<div class="hidden md:flex fixed left-6 md:left-8 top-1/2 -translate-y-1/2 z-50 items-center justify-start select-none group/dock">
+<!-- 2. Desktop Adaptive Side Dock (Screens >= lg: Self-contained liquid rail, hover expansion) -->
+<div class="hidden lg:flex fixed left-6 lg:left-8 top-1/2 -translate-y-1/2 z-50 items-center justify-start select-none group/dock">
 
   <!-- Unified Glass Capsule: Uses consistent rounded-[26px] corner curvature in BOTH states for organic liquid expansion -->
   <nav
@@ -147,64 +147,191 @@ const navItems = [
   </nav>
 </div>
 
-<!-- 3. Mobile Adaptive Floating Bottom Pill (Modern touch dock) -->
-<div class="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2.5rem)] max-w-sm select-none">
-  <div class="px-4 py-2.5 rounded-full bg-[#FAF8F5]/90 dark:bg-[#121110]/90 backdrop-blur-xl border border-[#181614]/[0.08] dark:border-white/[0.12] shadow-2xl flex items-center justify-between">
-    <!-- Active Section Live Indicator -->
-    <div class="flex items-center gap-2">
-      <span class="w-1.5 h-1.5 rounded-full bg-[#B27B48] animate-pulse"></span>
-      <span id="mobile-active-section-label" class="text-[11px] font-mono uppercase tracking-wider text-[#181614] dark:text-[#FAF8F5] font-medium">
-        01 // Mohit
-      </span>
-    </div>
+<!-- ========================================================================= -->
+<!-- 3. MOBILE & TABLET CONTROLLABLE FLOATING BOTTOM NAV BAR (Screens < lg)    -->
+<!-- ========================================================================= -->
 
-    <!-- Actions (Menu Toggle & Theme Switch) -->
-    <div class="flex items-center gap-2">
-      <button
-        id="theme-toggle-mobile"
-        type="button"
-        class="w-7 h-7 rounded-full flex items-center justify-center text-[#181614] dark:text-[#FAF8F5] hover:bg-[#181614]/5 dark:hover:bg-white/10 transition-colors focus:outline-none"
-        aria-label="Toggle theme"
-      >
-        <svg class="w-3.5 h-3.5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="4" stroke-width="1.8"></circle>
-          <path stroke-linecap="round" stroke-width="1.8" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"></path>
-        </svg>
-        <svg class="w-3.5 h-3.5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-        </svg>
-      </button>
+<!-- Semi-transparent Dismissal Backdrop Scrim (Tapping outside closes the upward drawer) -->
+<div
+  id="mobile-nav-backdrop"
+  class="lg:hidden fixed inset-0 bg-black/40 backdrop-blur-xs z-40 hidden transition-opacity duration-300"
+  aria-hidden="true"
+></div>
 
-      <button
-        id="mobile-sheet-toggle"
-        type="button"
-        class="px-2.5 py-1 rounded-full bg-[#181614] dark:bg-[#FAF8F5] text-[#FAF8F5] dark:text-[#181614] font-mono text-[10px] tracking-wider uppercase flex items-center gap-1 focus:outline-none"
-        aria-label="Toggle menu"
-      >
-        Menu
-      </button>
-    </div>
-  </div>
-
-  <!-- Mobile Navigation Sheet Overlay -->
+<div class="lg:hidden fixed bottom-[max(0.75rem,env(safe-area-inset-bottom,12px))] left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.25rem)] max-w-md sm:max-w-lg select-none">
+  
+  <!-- Upward Expanding Architectural Navigation Drawer (Opens ABOVE the bottom bar) -->
   <div
     id="mobile-sheet"
-    class="hidden mt-2 p-4 rounded-2xl bg-[#FAF8F5]/98 dark:bg-[#121110]/98 backdrop-blur-2xl border border-[#181614]/[0.08] dark:border-white/[0.12] shadow-2xl flex flex-col gap-1.5"
+    class="hidden absolute bottom-full mb-2.5 inset-x-0 p-4 sm:p-5 rounded-3xl bg-[#FAF8F5]/96 dark:bg-[#141312]/96 backdrop-blur-2xl border border-[#181614]/[0.08] dark:border-white/[0.12] shadow-[0_20px_50px_rgba(0,0,0,0.25)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.7)] flex flex-col gap-2.5 max-h-[75vh] overflow-y-auto"
   >
-    {navItems.map((item) => (
-      <a
-        href={`/#${item.id}`}
-        class="mobile-sheet-link flex items-center justify-between px-3 py-2 rounded-xl text-xs text-[#181614] dark:text-[#FAF8F5] hover:bg-[#181614]/5 dark:hover:bg-white/5 transition-colors"
+    <!-- Drawer Header -->
+    <div class="flex items-center justify-between pb-2.5 border-b border-[#181614]/[0.06] dark:border-white/[0.08]">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#B27B48] animate-pulse"></span>
+        <span class="text-[11px] font-mono tracking-wider uppercase text-[#181614] dark:text-[#FAF8F5] font-semibold">
+          Directory Index // 06
+        </span>
+      </div>
+      <button
+        id="mobile-sheet-close"
+        type="button"
+        class="w-6 h-6 rounded-full flex items-center justify-center text-[#615B52] dark:text-[#A39D92] hover:bg-[#181614]/5 dark:hover:bg-white/10 active:scale-95 transition-transform"
+        aria-label="Close menu"
       >
-        <span class="font-heading font-medium">
-          {item.label}
-        </span>
-        <span class="font-mono text-[10px] text-[#A39D92]">
-          {item.number}
-        </span>
+        ✕
+      </button>
+    </div>
+
+    <!-- All 6 Architectural Sections -->
+    <div class="flex flex-col gap-1 py-1">
+      {navItems.map((item) => (
+        <a
+          href={`/#${item.id}`}
+          data-mobile-sheet-link={item.id}
+          class="mobile-sheet-link flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs text-[#181614] dark:text-[#FAF8F5] hover:bg-[#181614]/5 dark:hover:bg-white/5 active:bg-[#B27B48]/15 transition-all touch-manipulation"
+        >
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-[10px] text-[#A39D92] dark:text-[#615B52]">
+              {item.number}
+            </span>
+            <div class="flex flex-col text-left">
+              <span class="font-heading font-semibold text-sm">
+                {item.label}
+              </span>
+              <span class="text-[10px] text-[#615B52] dark:text-[#A39D92]">
+                {item.subtitle}
+              </span>
+            </div>
+          </div>
+          <span class="text-xs font-mono text-[#B27B48]">
+            →
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <!-- Quick Correspondence & Direct Links Row -->
+    <div class="pt-2.5 border-t border-[#181614]/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs">
+      <a
+        href={identity.contact.whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#181614]/5 dark:bg-white/5 text-[#181614] dark:text-[#FAF8F5] font-mono text-[10px] tracking-wider uppercase active:scale-95 transition-transform"
+      >
+        <span>WhatsApp</span>
+        <span>↗</span>
       </a>
-    ))}
+
+      <a
+        href={`mailto:${identity.contact.email}`}
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#181614]/5 dark:bg-white/5 text-[#181614] dark:text-[#FAF8F5] font-mono text-[10px] tracking-wider uppercase active:scale-95 transition-transform"
+      >
+        <span>Email</span>
+        <span>↗</span>
+      </a>
+
+      <a
+        href="/music"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1DB954]/10 text-[#1DB954] font-mono text-[10px] tracking-wider uppercase active:scale-95 transition-transform"
+      >
+        <span>Records</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- Mobile Theme Mode Switcher in Drawer -->
+    <div class="pt-2 border-t border-[#181614]/[0.06] dark:border-white/[0.08]">
+      <button
+        id="theme-toggle-sheet"
+        type="button"
+        class="w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-xs text-[#615B52] dark:text-[#A39D92] hover:bg-[#181614]/5 dark:hover:bg-white/5 active:scale-95 transition-transform"
+      >
+        <span class="font-mono text-[10px] uppercase tracking-wider">Appearance Theme</span>
+        <span id="theme-label-sheet" class="text-[11px] font-semibold text-[#B27B48]">Auto</span>
+      </button>
+    </div>
   </div>
+
+  <!-- Direct Controllable Bottom Nav Bar Dock (Primary Tabs directly accessible with thumb!) -->
+  <nav
+    class="w-full px-2 py-1.5 sm:px-3 sm:py-2 rounded-full bg-[#FAF8F5]/92 dark:bg-[#141312]/92 backdrop-blur-2xl border border-[#181614]/[0.08] dark:border-white/[0.12] shadow-[0_12px_36px_rgba(0,0,0,0.16)] dark:shadow-[0_12px_36px_rgba(0,0,0,0.55)] flex items-center justify-between gap-1"
+    aria-label="Mobile Bottom Navigation Bar"
+  >
+    <!-- Direct Tab 1: Mohit (Home) -->
+    <a
+      href="/#hero"
+      data-bottom-tab="hero"
+      class="bottom-nav-tab flex-1 py-1.5 px-2 rounded-full text-center flex flex-col items-center justify-center transition-all duration-200 text-[#615B52] dark:text-[#A39D92] hover:text-[#181614] dark:hover:text-[#FAF8F5] active:scale-95 touch-manipulation"
+    >
+      <span class="font-heading text-[11px] sm:text-xs font-medium tracking-tight">Mohit</span>
+      <span class="tab-dot w-1 h-1 rounded-full bg-[#B27B48] mt-0.5 opacity-0 transition-opacity"></span>
+    </a>
+
+    <!-- Direct Tab 2: The Archetype (Work) -->
+    <a
+      href="/#work"
+      data-bottom-tab="work"
+      class="bottom-nav-tab flex-1 py-1.5 px-2 rounded-full text-center flex flex-col items-center justify-center transition-all duration-200 text-[#615B52] dark:text-[#A39D92] hover:text-[#181614] dark:hover:text-[#FAF8F5] active:scale-95 touch-manipulation"
+    >
+      <span class="font-heading text-[11px] sm:text-xs font-medium tracking-tight">Work</span>
+      <span class="tab-dot w-1 h-1 rounded-full bg-[#B27B48] mt-0.5 opacity-0 transition-opacity"></span>
+    </a>
+
+    <!-- Direct Tab 3: Wisdom -->
+    <a
+      href="/#wisdom"
+      data-bottom-tab="wisdom"
+      class="bottom-nav-tab flex-1 py-1.5 px-2 rounded-full text-center flex flex-col items-center justify-center transition-all duration-200 text-[#615B52] dark:text-[#A39D92] hover:text-[#181614] dark:hover:text-[#FAF8F5] active:scale-95 touch-manipulation"
+    >
+      <span class="font-heading text-[11px] sm:text-xs font-medium tracking-tight">Wisdom</span>
+      <span class="tab-dot w-1 h-1 rounded-full bg-[#B27B48] mt-0.5 opacity-0 transition-opacity"></span>
+    </a>
+
+    <!-- Direct Tab 4: Sound Sanctuary -->
+    <a
+      href="/#music"
+      data-bottom-tab="music"
+      class="bottom-nav-tab flex-1 py-1.5 px-2 rounded-full text-center flex flex-col items-center justify-center transition-all duration-200 text-[#615B52] dark:text-[#A39D92] hover:text-[#181614] dark:hover:text-[#FAF8F5] active:scale-95 touch-manipulation"
+    >
+      <span class="font-heading text-[11px] sm:text-xs font-medium tracking-tight">Music</span>
+      <span class="tab-dot w-1 h-1 rounded-full bg-[#B27B48] mt-0.5 opacity-0 transition-opacity"></span>
+    </a>
+
+    <!-- Subtle Divider -->
+    <div class="w-[1px] h-4 sm:h-5 bg-[#181614]/10 dark:bg-white/10 mx-0.5"></div>
+
+    <!-- Toggle Index Drawer Button -->
+    <button
+      id="mobile-sheet-toggle"
+      type="button"
+      class="py-1.5 px-2.5 sm:px-3 rounded-full bg-[#181614] dark:bg-[#FAF8F5] text-[#FAF8F5] dark:text-[#181614] font-mono text-[10px] tracking-wider uppercase flex items-center gap-1 active:scale-95 transition-all cursor-pointer font-semibold shadow-xs"
+      aria-label="Open directory index menu"
+      title="Open full index"
+    >
+      <span id="mobile-sheet-btn-text">Index</span>
+      <svg id="mobile-sheet-btn-chevron" class="w-2.5 h-2.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"></path>
+      </svg>
+    </button>
+
+    <!-- One-Tap Theme Toggle in Dock -->
+    <button
+      id="theme-toggle-mobile"
+      type="button"
+      class="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[#181614] dark:text-[#FAF8F5] hover:bg-[#181614]/5 dark:hover:bg-white/10 active:scale-90 transition-transform focus:outline-none cursor-pointer"
+      aria-label="Toggle appearance theme"
+      title="Cycle theme: Auto → Warm Light → Dark"
+    >
+      <svg class="w-3.5 h-3.5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" stroke-width="1.8"></circle>
+        <path stroke-linecap="round" stroke-width="1.8" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"></path>
+      </svg>
+      <svg class="w-3.5 h-3.5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+      </svg>
+    </button>
+  </nav>
 </div>
 
 <script>
@@ -220,7 +347,7 @@ const navItems = [
 
     let currentActiveId = '';
 
-    // 1. UPDATE ACTIVE INDICATORS & LABELS
+    // 1. UPDATE ACTIVE INDICATORS & LABELS ACROSS DESKTOP & MOBILE
     function updateActiveSection(activeId: string) {
       if (activeId === currentActiveId) return;
       currentActiveId = activeId;
@@ -228,19 +355,13 @@ const navItems = [
       const currentSection = sections.find((s) => s.id === activeId);
       if (!currentSection) return;
 
-      // Update Self-Contained Micro-Number on Collapsed Dock
+      // Update Self-Contained Micro-Number on Desktop Collapsed Dock
       const microNumber = document.getElementById('dock-micro-number');
       if (microNumber) {
         microNumber.textContent = currentSection.number;
       }
 
-      // Update Mobile Live Badge
-      const mobileBadgeLabel = document.getElementById('mobile-active-section-label');
-      if (mobileBadgeLabel) {
-        mobileBadgeLabel.textContent = `${currentSection.number} // ${currentSection.label}`;
-      }
-
-      // Update Collapsed Dots
+      // Update Desktop Collapsed Dots
       document.querySelectorAll('[data-nav-dot]').forEach((el) => {
         const target = el.getAttribute('data-nav-dot');
         if (target === activeId) {
@@ -250,7 +371,7 @@ const navItems = [
         }
       });
 
-      // Update Expanded Nav Links
+      // Update Desktop Expanded Nav Links
       document.querySelectorAll('[data-nav-link]').forEach((el) => {
         const target = el.getAttribute('data-nav-link');
         if (target === activeId) {
@@ -259,6 +380,33 @@ const navItems = [
         } else {
           el.classList.remove('bg-[#B27B48]/12', 'dark:bg-[#B27B48]/20', 'text-[#B27B48]', 'dark:text-[#E2A66C]', 'font-semibold');
           el.classList.add('text-[#615B52]', 'dark:text-[#A39D92]');
+        }
+      });
+
+      // Update Mobile & Tablet Bottom Dock Tabs
+      document.querySelectorAll('[data-bottom-tab]').forEach((tab) => {
+        const target = tab.getAttribute('data-bottom-tab');
+        const dot = tab.querySelector('.tab-dot');
+        if (target === activeId) {
+          tab.classList.add('bg-[#B27B48]/15', 'dark:bg-[#B27B48]/25', 'text-[#B27B48]', 'dark:text-[#E2A66C]', 'font-semibold');
+          tab.classList.remove('text-[#615B52]', 'dark:text-[#A39D92]');
+          dot?.classList.remove('opacity-0');
+          dot?.classList.add('opacity-100');
+        } else {
+          tab.classList.remove('bg-[#B27B48]/15', 'dark:bg-[#B27B48]/25', 'text-[#B27B48]', 'dark:text-[#E2A66C]', 'font-semibold');
+          tab.classList.add('text-[#615B52]', 'dark:text-[#A39D92]');
+          dot?.classList.remove('opacity-100');
+          dot?.classList.add('opacity-0');
+        }
+      });
+
+      // Update Mobile Sheet Links
+      document.querySelectorAll('[data-mobile-sheet-link]').forEach((link) => {
+        const target = link.getAttribute('data-mobile-sheet-link');
+        if (target === activeId) {
+          link.classList.add('bg-[#B27B48]/12', 'dark:bg-[#B27B48]/20', 'text-[#B27B48]', 'font-semibold');
+        } else {
+          link.classList.remove('bg-[#B27B48]/12', 'dark:bg-[#B27B48]/20', 'text-[#B27B48]', 'font-semibold');
         }
       });
     }
@@ -296,7 +444,7 @@ const navItems = [
     if (lenis) {
       lenis.on('scroll', onScroll);
     }
-    onScroll(); // Run immediately
+    onScroll();
 
     document.addEventListener('astro:before-swap', () => {
       window.removeEventListener('scroll', onScroll);
@@ -306,9 +454,20 @@ const navItems = [
       }
     }, { once: true });
 
-    // 3. SMOOTH SCROLL INTEGRATION (Lenis-aware)
+    // 3. SMOOTH SCROLL INTEGRATION & AUTOMATIC DRAWER DISMISSAL
+    function closeMobileSheet() {
+      const sheet = document.getElementById('mobile-sheet');
+      const backdrop = document.getElementById('mobile-nav-backdrop');
+      const chevron = document.getElementById('mobile-sheet-btn-chevron');
+      if (sheet) sheet.classList.add('hidden');
+      if (backdrop) backdrop.classList.add('hidden');
+      if (chevron) chevron.classList.remove('rotate-180');
+    }
+
     document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((anchor) => {
       anchor.addEventListener('click', (e) => {
+        closeMobileSheet();
+
         const href = anchor.getAttribute('href');
         if (!href) return;
         const hash = href.startsWith('/#') ? href.substring(1) : href;
@@ -320,7 +479,7 @@ const navItems = [
               e.preventDefault();
               const currentLenis = (window as any).__lenis;
               if (currentLenis) {
-                currentLenis.scrollTo(targetEl, { duration: 1.2, offset: 0 });
+                currentLenis.scrollTo(targetEl, { duration: 1.1, offset: 0 });
               } else {
                 targetEl.scrollIntoView({ behavior: 'smooth' });
               }
@@ -337,27 +496,28 @@ const navItems = [
       const isDark = document.documentElement.classList.contains('dark');
 
       const labelDesktop = document.getElementById('theme-label-desktop');
+      const labelSheet = document.getElementById('theme-label-sheet');
       const sunDesktop = document.getElementById('theme-icon-sun-desktop');
       const moonDesktop = document.getElementById('theme-icon-moon-desktop');
       const autoDesktop = document.getElementById('theme-icon-auto-desktop');
 
-      if (labelDesktop) {
-        if (!stored) {
-          labelDesktop.textContent = isDark ? 'Auto (Dark)' : 'Auto (Warm)';
-          autoDesktop?.classList.remove('hidden');
-          sunDesktop?.classList.add('hidden');
-          moonDesktop?.classList.add('hidden');
-        } else if (stored === 'light') {
-          labelDesktop.textContent = 'Warm Light';
-          sunDesktop?.classList.remove('hidden');
-          moonDesktop?.classList.add('hidden');
-          autoDesktop?.classList.add('hidden');
-        } else {
-          labelDesktop.textContent = 'Dark';
-          moonDesktop?.classList.remove('hidden');
-          sunDesktop?.classList.add('hidden');
-          autoDesktop?.classList.add('hidden');
-        }
+      const text = !stored ? (isDark ? 'Auto (Dark)' : 'Auto (Warm)') : (stored === 'light' ? 'Warm Light' : 'Dark');
+
+      if (labelDesktop) labelDesktop.textContent = text;
+      if (labelSheet) labelSheet.textContent = text;
+
+      if (!stored) {
+        autoDesktop?.classList.remove('hidden');
+        sunDesktop?.classList.add('hidden');
+        moonDesktop?.classList.add('hidden');
+      } else if (stored === 'light') {
+        sunDesktop?.classList.remove('hidden');
+        moonDesktop?.classList.add('hidden');
+        autoDesktop?.classList.add('hidden');
+      } else {
+        moonDesktop?.classList.remove('hidden');
+        sunDesktop?.classList.add('hidden');
+        autoDesktop?.classList.add('hidden');
       }
     }
 
@@ -366,15 +526,12 @@ const navItems = [
       const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
       if (!stored) {
-        // From Auto -> Switch to explicit Warm Light
         localStorage.setItem('theme', 'light');
         document.documentElement.classList.remove('dark');
       } else if (stored === 'light') {
-        // From Warm Light -> Switch to Dark
         localStorage.setItem('theme', 'dark');
         document.documentElement.classList.add('dark');
       } else {
-        // From Dark -> Return to Auto (System Default)
         localStorage.removeItem('theme');
         if (systemDark) {
           document.documentElement.classList.add('dark');
@@ -388,15 +545,15 @@ const navItems = [
     const themeDesktop = document.getElementById('theme-toggle-desktop');
     const themeMobile = document.getElementById('theme-toggle-mobile');
     const themeCollapsed = document.getElementById('theme-toggle-collapsed');
+    const themeSheet = document.getElementById('theme-toggle-sheet');
 
     if (themeDesktop) themeDesktop.addEventListener('click', cycleTheme);
     if (themeMobile) themeMobile.addEventListener('click', cycleTheme);
     if (themeCollapsed) themeCollapsed.addEventListener('click', cycleTheme);
+    if (themeSheet) themeSheet.addEventListener('click', cycleTheme);
 
-    // Initial sync
     updateThemeUI();
 
-    // Listen to OS system preference changes in real-time when in Auto mode
     try {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
       const handleSystemThemeChange = (e: MediaQueryListEvent) => {
@@ -412,21 +569,41 @@ const navItems = [
       mediaQuery.addEventListener('change', handleSystemThemeChange);
     } catch (err) {}
 
-    // 5. MOBILE SHEET TOGGLE
+    // 5. MOBILE DRAWER & BACKDROP TOGGLES
     const mobileBtn = document.getElementById('mobile-sheet-toggle');
     const mobileSheet = document.getElementById('mobile-sheet');
-    const mobileLinks = document.querySelectorAll('.mobile-sheet-link');
+    const mobileBackdrop = document.getElementById('mobile-nav-backdrop');
+    const mobileClose = document.getElementById('mobile-sheet-close');
+    const mobileChevron = document.getElementById('mobile-sheet-btn-chevron');
 
-    if (mobileBtn && mobileSheet) {
-      mobileBtn.addEventListener('click', () => {
-        mobileSheet.classList.toggle('hidden');
-      });
+    function toggleMobileDrawer() {
+      if (!mobileSheet) return;
+      const isHidden = mobileSheet.classList.contains('hidden');
+      if (isHidden) {
+        mobileSheet.classList.remove('hidden');
+        mobileBackdrop?.classList.remove('hidden');
+        mobileChevron?.classList.add('rotate-180');
+      } else {
+        closeMobileSheet();
+      }
+    }
 
-      mobileLinks.forEach((link) => {
-        link.addEventListener('click', () => {
-          mobileSheet.classList.add('hidden');
-        });
+    if (mobileBtn) {
+      mobileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMobileDrawer();
       });
+    }
+
+    if (mobileClose) {
+      mobileClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMobileSheet();
+      });
+    }
+
+    if (mobileBackdrop) {
+      mobileBackdrop.addEventListener('click', closeMobileSheet);
     }
   }
 

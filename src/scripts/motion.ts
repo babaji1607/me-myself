@@ -201,19 +201,23 @@ export function initMotion() {
 
   // Music Cards
   const musicCards = gsap.utils.toArray('.music-card');
-  if (musicCards.length) {
-    gsap.to(musicCards, {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      stagger: 0.12,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '#music-grid',
-        start: 'top 82%',
-        toggleActions: 'play none none none'
+  const musicGrid = document.getElementById('music-grid');
+  if (musicCards.length && musicGrid) {
+    gsap.fromTo(musicCards,
+      { y: 24, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: musicGrid,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
       }
-    });
+    );
   }
 
   // Living Memory Bento Cards
